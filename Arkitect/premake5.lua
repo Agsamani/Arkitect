@@ -7,8 +7,8 @@ project "Arkitect"
     targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
     objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
-    pchheader "ktpch.h"
-    pchsource "src/ktpch.cpp"
+    pchheader "rktpch.h"
+    pchsource "src/rktpch.cpp"
 
     files
 	{
@@ -23,19 +23,20 @@ project "Arkitect"
 
     includedirs
 	{
-		"src"
+		"src",
+        "%{IncludeDir.spdlog}"
 	}
 
     filter "system:windows"
 		systemversion "latest"
 
         filter "configurations:Debug"
-		defines "KT_DEBUG"
+		defines "RKT_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "KT_RELEASE"
+		defines "RKT_RELEASE"
 		runtime "Release"
 		optimize "on"
 

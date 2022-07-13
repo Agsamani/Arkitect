@@ -15,7 +15,8 @@ project "TestGame"
 
     includedirs
 	{
-		"%{wks.location}/Arkitect/src"
+		"%{wks.location}/Arkitect/src",
+        "%{IncludeDir.spdlog}"
 	}
 
     links
@@ -27,11 +28,11 @@ project "TestGame"
 		systemversion "latest"
 
 	filter "configurations:Debug"
-		defines "KT_DEBUG"
+		defines "RKT_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "KT_RELEASE"
+		defines "RKT_RELEASE"
 		runtime "Release"
 		optimize "on"

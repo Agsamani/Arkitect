@@ -12,5 +12,8 @@ workspace "Arkitect"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+group "Dependencies"
+group ""
+
 include "Arkitect"
 include "TestGame"

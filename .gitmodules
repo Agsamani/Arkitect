@@ -1,0 +1,3 @@
+[submodule "Arkitect/vendor/spdlog"]
+	path = Arkitect/vendor/spdlog
+	url = https://github.com/gabime/spdlog
