@@ -1,3 +1,4 @@
+#include "ktpch.h"
 #include "Testr.h"
 
 namespace Arkitect {
