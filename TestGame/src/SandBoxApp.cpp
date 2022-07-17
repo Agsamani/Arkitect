@@ -8,10 +8,6 @@ public:
 
 	~SandBoxApp() {
 	}
-
-	void Test() {
-		RKT_TRACE("SandBox is running...");
-	}
 };
 
 Arkitect::Application* Arkitect::CreateApplication() {

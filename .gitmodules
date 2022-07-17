@@ -1,3 +1,6 @@
 [submodule "Arkitect/vendor/spdlog"]
 	path = Arkitect/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Arkitect/vendor/GLFW"]
+	path = Arkitect/vendor/GLFW
+	url = https://github.com/glfw/glfw

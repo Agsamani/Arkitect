@@ -5,15 +5,35 @@
 
 namespace Arkitect {
 
+	// TODO : singleton maybe
+
+	Application::Application()
+	{
+		m_Window = std::make_unique<Window>();
+		m_Window->SetEventCallback(RKT_BIND_EVENT_FN(OnEvent));
+	}
+
 	void Arkitect::Application::run()
 	{
-		RKT_CORE_TRACE("Application running...");
-		Test();
+		while (m_Running)
+		{
+
+		}
 	}
 
 	Application::~Application()
 	{
 
+	}
+
+	void Application::OnEvent(Event& e)
+	{
+		RKT_CORE_TRACE(e);
+	}
+
+	void Application::Close()
+	{
+		m_Running = false;
 	}
 
 }

@@ -13,6 +13,7 @@ workspace "Arkitect"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 group "Dependencies"
+	include "Arkitect/vendor/GLFW"
 group ""
 
 include "Arkitect"
