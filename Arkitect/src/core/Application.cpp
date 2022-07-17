@@ -3,6 +3,7 @@
 
 #include "Base.h"
 
+
 namespace Arkitect {
 
 	// TODO : singleton maybe
@@ -17,18 +18,15 @@ namespace Arkitect {
 	{
 		while (m_Running)
 		{
-
+			m_Window->OnUpdate();
 		}
-	}
-
-	Application::~Application()
-	{
-
 	}
 
 	void Application::OnEvent(Event& e)
 	{
-		RKT_CORE_TRACE(e);
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(RKT_BIND_EVENT_FN(OnWindowCloseEvent));
+		dispatcher.Dispatch<WindowResizeEvent>(RKT_BIND_EVENT_FN(OnWindowResizeEvent));
 	}
 
 	void Application::Close()
@@ -36,4 +34,27 @@ namespace Arkitect {
 		m_Running = false;
 	}
 
+	bool Application::OnWindowCloseEvent(WindowCloseEvent& e)
+	{
+		m_Running = false;
+		return true;
+	}
+
+	bool Application::OnWindowResizeEvent(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+			return false;
+		}
+
+		m_Minimized = false;
+
+		return false;
+	}
+
+	Application::~Application()
+	{
+		
+	}
 }

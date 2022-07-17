@@ -11,27 +11,27 @@ namespace Arkitect {
 		
 		void OnUpdate();
 
-		unsigned int GetWidth() { return m_Data.width; }
-		unsigned int GetHeight() { return m_Data.height; }
+		unsigned int GetWidth() { return m_Data.Width; }
+		unsigned int GetHeight() { return m_Data.Height; }
 
-		void SetEventCallback(std::function<void(Event&)> eventCallback) { m_Data.eventCallbackFn = eventCallback; }
-		bool IsVsync() { return m_Data.vsync; }
+		void SetEventCallback(std::function<void(Event&)> eventCallback) { m_Data.EventCallback = eventCallback; }
+		bool IsVsync() { return m_Data.VSync; }
 		void SetVSync(bool enabled);
 
-		void* GetNativeWindow() { return m_GLFWwindow; }
+		void* GetNativeWindow() { return m_Window; }
 	private:
 		void Init(int width, int height, std::string title);
 		void Shutdown();
 
 		// TODO : clean this
-		void* m_GLFWwindow;
+		void* m_Window;
 
 		struct WindowData {
-			std::string title;
-			unsigned int width, height;
-			bool vsync = true;
+			std::string Title;
+			unsigned int Width, Height;
+			bool VSync = true;
 
-			std::function<void(Event&)> eventCallbackFn;
+			std::function<void(Event&)> EventCallback;
 		};
 
 		WindowData m_Data;
