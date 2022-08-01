@@ -26,13 +26,15 @@ project "Arkitect"
 	{
 		"src",
         "%{IncludeDir.spdlog}",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.glad}"
 	}
 
 	links
 	{
 		"GLFW",
-		"opengl32.lib"
+		"opengl32.lib",
+		"glad"
 	}
 
     filter "system:windows"

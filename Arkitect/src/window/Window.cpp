@@ -7,6 +7,8 @@
 #include "events/KeyEvent.h"
 #include "events/MouseEvent.h"
 
+#include "glad/glad.h"
+
 
 namespace Arkitect {
 
@@ -46,6 +48,9 @@ namespace Arkitect {
 		}
 		++s_GLFWWindowCount;
 		glfwMakeContextCurrent((GLFWwindow*)m_Window);
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+			RKT_CORE_ERROR("Glad loading failed");
+		}
 		glfwSetWindowUserPointer((GLFWwindow*)m_Window, &m_Data);
 		SetVSync(true);
 

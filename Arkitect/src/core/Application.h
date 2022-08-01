@@ -3,6 +3,7 @@
 #include "window/Window.h"
 #include "events/Event.h"
 #include "events/ApplicationEvent.h"
+#include "LayerStack.h"
 
 int main(int argc, char** argv);
 
@@ -18,6 +19,9 @@ namespace Arkitect {
 		void OnEvent(Event& e);
 		void Close();
 
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
+
 	private:
 		void run();
 		bool OnWindowCloseEvent(WindowCloseEvent& e);
@@ -27,6 +31,10 @@ namespace Arkitect {
 
 		bool m_Running = true;
 		bool m_Minimized = false;
+
+		LayerStack layerStack;
+
+		float m_LastFrameTime = 0.0;
 
 		friend int ::main(int argc, char** argv);
 	};
