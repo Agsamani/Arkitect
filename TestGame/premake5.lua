@@ -18,7 +18,8 @@ project "TestGame"
 		"%{wks.location}/Arkitect/src",
 		"%{wks.location}/Arkitect/vendor",
         "%{IncludeDir.spdlog}",
-        "%{IncludeDir.imgui}"
+        "%{IncludeDir.imgui}",
+        "%{IncludeDir.glm}"
 	}
 
     links

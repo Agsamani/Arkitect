@@ -6,7 +6,7 @@
 namespace Arkitect {
 	class Window {
 	public:
-		Window(int width = 1280, int height = 720, std::string title = "Arkitect");
+		Window(int width = 1680, int height = 1050, std::string title = "Arkitect");
 		~Window() = default;
 		
 		void OnUpdate();

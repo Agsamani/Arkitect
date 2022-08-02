@@ -8,3 +8,6 @@
 	path = Arkitect/vendor/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
+[submodule "Arkitect/vendor/glm"]
+	path = Arkitect/vendor/glm
+	url = https://github.com/g-truc/glm.git
