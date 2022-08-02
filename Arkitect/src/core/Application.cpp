@@ -7,12 +7,20 @@
 
 namespace Arkitect {
 
-	// TODO : singleton maybe
+	Application* Application::m_Instance = nullptr;
 
 	Application::Application()
 	{
+		if (m_Instance) {
+			RKT_CORE_ERROR("Application already exists");
+		}
+		m_Instance = this;
+
 		m_Window = std::make_unique<Window>();
 		m_Window->SetEventCallback(RKT_BIND_EVENT_FN(OnEvent));
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 	}
 
 	void Application::run()
@@ -23,11 +31,17 @@ namespace Arkitect {
 			Deltatime dt = currentTime - m_LastFrameTime;
 			m_LastFrameTime = currentTime;
 
-			m_Window->OnUpdate();
-
 			for (Layer* layer : layerStack) {
 				layer->OnUpdate(dt);
 			}
+
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : layerStack) {
+				layer->OnImGuiUpdate();
+			}
+			m_ImGuiLayer->End();
+
+			m_Window->OnUpdate();
 		}
 	}
 
@@ -37,11 +51,11 @@ namespace Arkitect {
 		dispatcher.Dispatch<WindowCloseEvent>(RKT_BIND_EVENT_FN(OnWindowCloseEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(RKT_BIND_EVENT_FN(OnWindowResizeEvent));
 
-		for (Layer* layer : layerStack) {
+		for (auto it = layerStack.rbegin(); it != layerStack.rend(); it++) {
 			if (e.Handled) {
 				break;
 			}
-			layer->OnEvent(e);
+			(*it)->OnEvent(e);
 		}
 	}
 
@@ -81,6 +95,6 @@ namespace Arkitect {
 
 	Application::~Application()
 	{
-		
 	}
+
 }

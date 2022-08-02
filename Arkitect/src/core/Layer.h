@@ -11,6 +11,7 @@ namespace Arkitect {
 		virtual void OnAttach() {};
 		virtual void OnDetach() {};
 		virtual void OnUpdate(float dt) {};
+		virtual void OnImGuiUpdate() {};
 		virtual void OnEvent(Event& e) {};
 
 		const std::string& GetName() const { return m_Name; }

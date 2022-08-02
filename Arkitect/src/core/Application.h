@@ -4,6 +4,7 @@
 #include "events/Event.h"
 #include "events/ApplicationEvent.h"
 #include "LayerStack.h"
+#include "imgui/ImGuiLayer.h"
 
 int main(int argc, char** argv);
 
@@ -22,6 +23,7 @@ namespace Arkitect {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		static Application& Get() { return *m_Instance; }
 	private:
 		void run();
 		bool OnWindowCloseEvent(WindowCloseEvent& e);
@@ -32,10 +34,12 @@ namespace Arkitect {
 		bool m_Running = true;
 		bool m_Minimized = false;
 
+		ImGuiLayer* m_ImGuiLayer;
 		LayerStack layerStack;
 
 		float m_LastFrameTime = 0.0;
 
+		static Application* m_Instance;
 		friend int ::main(int argc, char** argv);
 	};
 

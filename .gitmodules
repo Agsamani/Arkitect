@@ -4,3 +4,7 @@
 [submodule "Arkitect/vendor/GLFW"]
 	path = Arkitect/vendor/GLFW
 	url = https://github.com/glfw/glfw
+[submodule "Arkitect/vendor/imgui"]
+	path = Arkitect/vendor/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = docking

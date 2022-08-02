@@ -16,7 +16,9 @@ project "TestGame"
     includedirs
 	{
 		"%{wks.location}/Arkitect/src",
-        "%{IncludeDir.spdlog}"
+		"%{wks.location}/Arkitect/vendor",
+        "%{IncludeDir.spdlog}",
+        "%{IncludeDir.imgui}"
 	}
 
     links
