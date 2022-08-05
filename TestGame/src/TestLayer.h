@@ -14,5 +14,17 @@ public:
 
 	void OnImGuiUpdate() override;
 
+
+	void OnAttach() override;
+
+
+	void OnDetach() override;
+
+
+	void OnUpdate(float dt) override;
+
+
+	void OnEvent(Arkitect::Event& e) override;
+
 };
 

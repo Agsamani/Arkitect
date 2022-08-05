@@ -41,6 +41,10 @@ namespace Arkitect {
 
 		static Application* m_Instance;
 		friend int ::main(int argc, char** argv);
+
+
+		//TEMP
+		unsigned int program, VAO;
 	};
 
 	static Application* CreateApplication();
