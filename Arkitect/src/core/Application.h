@@ -6,6 +6,12 @@
 #include "LayerStack.h"
 #include "imgui/ImGuiLayer.h"
 
+
+//TEMP
+#include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
+
+
 int main(int argc, char** argv);
 
 namespace Arkitect {
@@ -44,7 +50,8 @@ namespace Arkitect {
 
 
 		//TEMP
-		unsigned int program, VAO;
+		unsigned int program;
+		std::unique_ptr<VertexArray> VAO;
 	};
 
 	static Application* CreateApplication();

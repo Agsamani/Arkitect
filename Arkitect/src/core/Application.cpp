@@ -10,6 +10,9 @@
 #include <fstream>
 #include <sstream>
 
+#include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
+
 // TODO : debug callback
 
 
@@ -47,24 +50,19 @@ namespace Arkitect {
 			2, 3, 0
 		};
 
-		glCreateVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
+		VAO = std::make_unique<VertexArray>();
 
-		unsigned int VBO;
-		glCreateBuffers(1, &VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		std::shared_ptr<VertexBuffer> VBO = std::make_shared<VertexBuffer>(vertices, sizeof(vertices));
 
-		unsigned int IBO;
-		glCreateBuffers(1, &IBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		BufferLayout layout = {
+			{ShaderDataType::Float2, "position"}
+		};
+		VBO->SetLayout(layout);
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		//glVertexArrayAttribBinding(VAO, 0, 0);
-		//glVertexArrayAttribFormat(VAO, 0, 2, GL_FLOAT, GL_FALSE, 0);
+		std::shared_ptr<IndexBuffer> IBO = std::make_shared<IndexBuffer>(indices, 6);
 
+		VAO->SetIndexBuffer(IBO);
+		VAO->AddVertexBuffer(VBO);
 
 		program = glCreateProgram();
 
@@ -131,7 +129,7 @@ void main()
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			glUseProgram(program);
-			glBindVertexArray(VAO);
+			VAO->Bind();
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		}
 	}
