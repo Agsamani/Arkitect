@@ -6,13 +6,6 @@
 #include "LayerStack.h"
 #include "imgui/ImGuiLayer.h"
 
-
-//TEMP
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/Program.h"
-
-
 int main(int argc, char** argv);
 
 namespace Arkitect {
@@ -49,10 +42,6 @@ namespace Arkitect {
 		static Application* m_Instance;
 		friend int ::main(int argc, char** argv);
 
-
-		//TEMP
-		std::unique_ptr<Program> program;
-		std::shared_ptr<VertexArray> VAO;
 	};
 
 	static Application* CreateApplication();

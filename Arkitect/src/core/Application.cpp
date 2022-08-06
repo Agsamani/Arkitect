@@ -6,15 +6,6 @@
 
 #include "Renderer/RenderCommand.h"
 
-//TEMP
-#include <glad/glad.h>
-#include <fstream>
-#include <sstream>
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
-
-// TODO : debug callback
-
 
 namespace Arkitect {
 
@@ -35,45 +26,7 @@ namespace Arkitect {
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
-
-		//TEMP
-		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
-		RenderCommand::SetClearColor({ 0.15, 0.15, 0.15, 1.0 });
-
-
-		float vertices[] = {
-			-0.5f, -0.5f, 0.2, 0.5, 0.6, 1.0,
-			 0.5f, -0.5f, 0.9, 0.5, 0.2, 1.0,
-			 0.5f,  0.5f, 0.2, 0.0, 0.6, 1.0,
-			-0.5f,  0.5f, 0.4, 0.5, 0.9, 1.0
-		};
-
-		unsigned int indices[] = {
-			0, 1, 2,
-			2, 3, 0
-		};
-
-		VAO = std::make_shared<VertexArray>();
-
-		std::shared_ptr<VertexBuffer> VBO = std::make_shared<VertexBuffer>(vertices, sizeof(vertices));
-
-		BufferLayout layout = {
-			{ShaderDataType::Float2, "position"},
-			{ShaderDataType::Float4, "color"}
-		};
-		VBO->SetLayout(layout);
-
-		std::shared_ptr<IndexBuffer> IBO = std::make_shared<IndexBuffer>(indices, 6);
-
-		VAO->SetIndexBuffer(IBO);
-		VAO->AddVertexBuffer(VBO);
-
-		program = std::make_unique<Program>();
-		program->AttachShader(Shader("../Arkitect/assets/shaders/default.vert", ShaderType::Vertex));
-		program->AttachShader(Shader("../Arkitect/assets/shaders/default.frag", ShaderType::Fragment));
-
-		program->LinkProgram();
-		program->UseProgram();
+		Arkitect::RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 	}
 
 	void Application::run()
@@ -95,12 +48,6 @@ namespace Arkitect {
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
-
-
-			//TEMP
-			RenderCommand::Clear();
-			program->UseProgram();
-			RenderCommand::DrawIndexed(VAO, 6);
 		}
 	}
 
@@ -148,7 +95,7 @@ namespace Arkitect {
 		}
 
 		m_Minimized = false;
-
+		Arkitect::RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 		return false;
 	}
 
