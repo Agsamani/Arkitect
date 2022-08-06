@@ -52,7 +52,7 @@ namespace Arkitect {
 
 		//TEMP
 		std::unique_ptr<Program> program;
-		std::unique_ptr<VertexArray> VAO;
+		std::shared_ptr<VertexArray> VAO;
 	};
 
 	static Application* CreateApplication();

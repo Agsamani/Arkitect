@@ -4,6 +4,7 @@
 #include "Utils.h"
 #include "Base.h"
 
+#include "Renderer/RenderCommand.h"
 
 //TEMP
 #include <glad/glad.h>
@@ -29,13 +30,16 @@ namespace Arkitect {
 		m_Window = std::make_unique<Window>();
 		m_Window->SetEventCallback(RKT_BIND_EVENT_FN(OnEvent));
 
+		RenderCommand::Init();
+
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
-		//TEMP
-		glViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 
-		glClearColor(0.15, 0.15, 0.15, 1.0);
+		//TEMP
+		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
+		RenderCommand::SetClearColor({ 0.15, 0.15, 0.15, 1.0 });
+
 
 		float vertices[] = {
 			-0.5f, -0.5f, 0.2, 0.5, 0.6, 1.0,
@@ -49,7 +53,7 @@ namespace Arkitect {
 			2, 3, 0
 		};
 
-		VAO = std::make_unique<VertexArray>();
+		VAO = std::make_shared<VertexArray>();
 
 		std::shared_ptr<VertexBuffer> VBO = std::make_shared<VertexBuffer>(vertices, sizeof(vertices));
 
@@ -94,11 +98,9 @@ namespace Arkitect {
 
 
 			//TEMP
-			glClear(GL_COLOR_BUFFER_BIT);
-
+			RenderCommand::Clear();
 			program->UseProgram();
-			VAO->Bind();
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			RenderCommand::DrawIndexed(VAO, 6);
 		}
 	}
 

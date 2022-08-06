@@ -34,6 +34,22 @@ namespace Arkitect {
 		const char* shaderData = str.c_str();
 		glShaderSource(m_RendererID, 1, &shaderData, NULL);
 		glCompileShader(m_RendererID);
+
+		GLint isCompiled = 0;
+		glGetShaderiv(m_RendererID, GL_COMPILE_STATUS, &isCompiled);
+		if (isCompiled == GL_FALSE)
+		{
+			GLint maxLength = 0;
+			glGetShaderiv(m_RendererID, GL_INFO_LOG_LENGTH, &maxLength);
+
+			std::string errorLog;
+			errorLog.reserve(maxLength);
+			glGetShaderInfoLog(m_RendererID, maxLength, &maxLength, errorLog.data());
+
+			RKT_CORE_CRITICAL("Shader compilation: {0}", errorLog.c_str());
+
+			//glDeleteShader(shader); // Don't leak the shader.
+		}
 	}
 
 	Shader::~Shader()
