@@ -9,7 +9,6 @@
 #include <glad/glad.h>
 #include <fstream>
 #include <sstream>
-
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
 
@@ -39,10 +38,10 @@ namespace Arkitect {
 		glClearColor(0.15, 0.15, 0.15, 1.0);
 
 		float vertices[] = {
-			-0.5f, -0.5f,
-			 0.5f, -0.5f,
-			 0.5f,  0.5f,
-			-0.5f,  0.5f
+			-0.5f, -0.5f, 0.2, 0.5, 0.6, 1.0,
+			 0.5f, -0.5f, 0.9, 0.5, 0.2, 1.0,
+			 0.5f,  0.5f, 0.2, 0.0, 0.6, 1.0,
+			-0.5f,  0.5f, 0.4, 0.5, 0.9, 1.0
 		};
 
 		unsigned int indices[] = {
@@ -55,7 +54,8 @@ namespace Arkitect {
 		std::shared_ptr<VertexBuffer> VBO = std::make_shared<VertexBuffer>(vertices, sizeof(vertices));
 
 		BufferLayout layout = {
-			{ShaderDataType::Float2, "position"}
+			{ShaderDataType::Float2, "position"},
+			{ShaderDataType::Float4, "color"}
 		};
 		VBO->SetLayout(layout);
 
@@ -64,44 +64,12 @@ namespace Arkitect {
 		VAO->SetIndexBuffer(IBO);
 		VAO->AddVertexBuffer(VBO);
 
-		program = glCreateProgram();
+		program = std::make_unique<Program>();
+		program->AttachShader(Shader("../Arkitect/assets/shaders/default.vert", ShaderType::Vertex));
+		program->AttachShader(Shader("../Arkitect/assets/shaders/default.frag", ShaderType::Fragment));
 
-		unsigned int vShader = glCreateShader(GL_VERTEX_SHADER);
-		std::string vShaderString = R"(#version 460 core
-
-layout (location = 0) in vec2 aPos; 
-
-void main()
-{
-    gl_Position = vec4(aPos , 0.0, 1.0);
-})";
-
-		const char* vShaderSource = vShaderString.c_str();
-		glShaderSource(vShader, 1, &vShaderSource, NULL);
-		glCompileShader(vShader);
-		glAttachShader(program, vShader);
-
-		unsigned int fShader = glCreateShader(GL_FRAGMENT_SHADER);
-		std::string fShaderString = R"(#version 460 core
-
-out vec4 FragColor;
-
-void main()
-{
-    FragColor = vec4(227.0/256.0,0.0/256.0,79.0/256.0,1.0f);
-} )";
-
-		const char* fShaderSource = fShaderString.c_str();
-		glShaderSource(fShader, 1, &fShaderSource, NULL);
-		glCompileShader(fShader);
-		glAttachShader(program, fShader);
-
-		glDeleteShader(vShader);
-		glDeleteShader(fShader);
-
-		glLinkProgram(program);
-
-		glUseProgram(program);
+		program->LinkProgram();
+		program->UseProgram();
 	}
 
 	void Application::run()
@@ -128,7 +96,7 @@ void main()
 			//TEMP
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			glUseProgram(program);
+			program->UseProgram();
 			VAO->Bind();
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		}

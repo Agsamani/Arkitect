@@ -10,6 +10,7 @@
 //TEMP
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
+#include "Renderer/Program.h"
 
 
 int main(int argc, char** argv);
@@ -50,7 +51,7 @@ namespace Arkitect {
 
 
 		//TEMP
-		unsigned int program;
+		std::unique_ptr<Program> program;
 		std::unique_ptr<VertexArray> VAO;
 	};
 
