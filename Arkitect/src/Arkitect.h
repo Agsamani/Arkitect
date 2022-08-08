@@ -13,3 +13,6 @@
 #include "renderer/Program.h"
 #include "renderer/RenderCommand.h"
 #include "renderer/Shader.h"
+
+// Vendor
+#include "glm/glm.hpp"

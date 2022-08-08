@@ -11,7 +11,7 @@ namespace Arkitect {
 		operator float() const { return m_Time; }
 
 		float GetSeconds() const { return m_Time; }
-		float GetMilliseconds() const { return m_Time * 10e3; }
+		float GetMilliseconds() const { return m_Time * 1e3; }
 
 	private:
 		float m_Time;
