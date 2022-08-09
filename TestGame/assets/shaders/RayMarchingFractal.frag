@@ -89,8 +89,8 @@ void main()
 
     vec3 eye = (u_RayRotation * u_Transform * vec4(0.0, 0.0, 0.0, 1.0)).xyz; // u_RayRotation * 
 
-    int MAX_ITERATION = 200;
-    float collisionThreshold = 0.00005;
+    int MAX_ITERATION = 20;
+    float collisionThreshold = 0.0005;
     float maxRayDist = 20.0;
 
     vec3 ray = vec3(0.0);//vec3(vec3(screenCoord, planeDist)) / 4.0; // u_RayRotation * 
@@ -114,7 +114,7 @@ void main()
         iterations++;
     }
 
-    vec3 normal = EstimateNormal(eye + ray);
+    //vec3 normal = EstimateNormal(eye + ray);
     //////////////////////////////////////
 
     vec3 hitPos = eye + ray;

@@ -105,7 +105,8 @@ namespace Arkitect {
 		}
 
 		m_Minimized = false;
-		Arkitect::RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
+		
+		Arkitect::RenderCommand::SetViewport(0, 0, e.GetWidth(), e.GetHeight());
 		return false;
 	}
 

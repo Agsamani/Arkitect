@@ -13,9 +13,7 @@
 #include "renderer/Program.h"
 #include "renderer/RenderCommand.h"
 #include "renderer/Shader.h"
-
-// Utils
-#include "utils/FileIO.h"
+#include "renderer/Texture2D.h"
 
 // Vendor
 #include "glm/glm.hpp"
