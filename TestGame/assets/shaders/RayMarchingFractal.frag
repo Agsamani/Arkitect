@@ -7,6 +7,12 @@ uniform mat4 u_RayRotation;
 uniform float u_Var;
 uniform int u_Power;
 
+uniform vec3 u_GlowColor;
+uniform vec3 u_BGColor;
+uniform vec3 u_AColor;
+uniform vec3 u_BColor;
+
+
 float SphereSDF(vec3 rayPos, vec3 center, float radius) {
     return distance(rayPos, center) - radius;
 }
@@ -78,13 +84,13 @@ void main()
     vec3 lightPos = vec3(5.0, 0.0, 0.0);
     vec3 sunLightDir = normalize(vec3(-1.0));
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
-    vec2 screenCoord = (gl_FragCoord.xy / 1050) * 2.0 - vec2(1680.0/1050.0,1.0);
+    vec2 screenCoord = (gl_FragCoord.xy / 1280.0) * 2.0 - vec2(2048.0/1280.0,1.0);
     float planeDist = 3.0;
 
     vec3 eye = (u_RayRotation * u_Transform * vec4(0.0, 0.0, 0.0, 1.0)).xyz; // u_RayRotation * 
 
-    int MAX_ITERATION = 120;
-    float collisionThreshold = 0.0001;
+    int MAX_ITERATION = 200;
+    float collisionThreshold = 0.00005;
     float maxRayDist = 20.0;
 
     vec3 ray = vec3(0.0);//vec3(vec3(screenCoord, planeDist)) / 4.0; // u_RayRotation * 
@@ -144,19 +150,19 @@ void main()
     float AmbientOcclusion = 1 - itRatio;
     if (hit) {
         
-        vec3 baseColor = (vec3( 0.77, 0.5 * sqrt(AmbientOcclusion), 0.2 + itRatio));
+        vec3 baseColor = vec3(u_AColor.x * AmbientOcclusion + u_BColor.y, u_AColor.y, u_AColor.z * itRatio + u_BColor.z);//mix(u_AColor, u_BColor, (itRatio * itRatio)) ;
         vec3 oColor = baseColor * AmbientOcclusion;
         
-        float shadowDensity = 0.1;
+        float shadowDensity = u_BColor.x;
         if(hit2) {
             oColor *= 1.0 * shadowDensity;
         } else {
-            oColor *= sin(min(9 * minAngle, 3.14/2.0)) * (1 - shadowDensity) + shadowDensity ;
+            oColor *= sin(min(minAngle, 3.14/2.0)) * (1 - shadowDensity) + shadowDensity ;
         }
         
         FragColor = vec4(oColor, 1.0);
     } else {
-        FragColor = vec4(0.4 * itRatio * itRatio, 0.00 , 0.1  * itRatio ,1.0);
+        FragColor = vec4(mix(u_BGColor, u_GlowColor, pow(itRatio, 2)), 1.0);
     }
 
     float gamma = 2.2;

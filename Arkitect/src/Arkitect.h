@@ -14,5 +14,8 @@
 #include "renderer/RenderCommand.h"
 #include "renderer/Shader.h"
 
+// Utils
+#include "utils/FileIO.h"
+
 // Vendor
 #include "glm/glm.hpp"

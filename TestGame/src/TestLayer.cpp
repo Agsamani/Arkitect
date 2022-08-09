@@ -8,6 +8,7 @@
 #include "glm/gtx/vector_angle.hpp"
 
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
@@ -50,7 +51,7 @@ void TestLayer::OnAttach()
 	program->LinkProgram();
 	program->UseProgram();
 
-	cPosition = glm::vec3(0.0, 0.0, -4.0);
+	cPosition = glm::vec3(0.0, 0.0, -3.0);
 	cameraDir = glm::vec4(0.0, 0.0, 1.0, 1.0);
 
 	cOrientation = glm::rotate(glm::mat4(1.0), theta, glm::vec3(0.5, -0.4, 0.7));
@@ -96,7 +97,7 @@ void TestLayer::OnUpdate(float dt)
 	if (Arkitect::Input::IsMouseButtonPressed(Arkitect::Mouse::ButtonLeft)) {
 		
 		glm::vec2 curserPos = Arkitect::Input::GetMousePosition();
-		curserPos = glm::normalize(glm::vec2(curserPos.x, -curserPos.y)) * glm::vec2(2.0 * 1680.0 / 1050.0 ,2.0) - glm::vec2(1.0);
+		curserPos = glm::normalize(glm::vec2(curserPos.x, -curserPos.y)) * glm::vec2(2.0 * 1.6 ,2.0) - glm::vec2(1.0);
 		if (firstClick) {
 			cOrientation *= newOrientation;
 			newOrientation = glm::mat4(1.0);
@@ -120,8 +121,13 @@ void TestLayer::OnUpdate(float dt)
 	program->UploadUniformMat4("u_RayRotation", cOrientation * newOrientation);
 	program->UploadUniformFloat("u_Var", var);
 	program->UploadUniformInt("u_Power", powerVar);
+	program->UploadUniformFloat3("u_GlowColor", GlowColor);
+	program->UploadUniformFloat3("u_BGColor", BGColor);
+	program->UploadUniformFloat3("u_AColor", AColor);
+	program->UploadUniformFloat3("u_BColor", BColor);
 
-	//var += 0.16 * dt;
+
+	var += 0.15 * dt;
 	//theta -= 0.12 * dt;
 	cOrientation = glm::rotate(glm::mat4(1.0), theta, glm::vec3(0.5, -0.4, 0.7));
 
@@ -133,7 +139,17 @@ void TestLayer::OnUpdate(float dt)
 void TestLayer::OnImGuiUpdate()
 {
 	ImGui::Begin("Power:");
-	ImGui::InputInt("power", &powerVar, 1, 1);
+	if (ImGui::Button("Take screenshot")) {
+		std::string path = "scr/img_xx.png";
+		path[8] = (char)(scrcnt / 10 + '0');
+		path[9] = (char)(scrcnt % 10 + '0');
+		scrcnt++;
+		Arkitect::FileIO::ScreenShot(path.c_str());
+	}
+	ImGui::ColorEdit3("Glow Color", glm::value_ptr(GlowColor));
+	ImGui::ColorEdit3("Background Color", glm::value_ptr(BGColor));
+	ImGui::ColorEdit3("A Color", glm::value_ptr(AColor));
+	ImGui::ColorEdit3("B Color", glm::value_ptr(BColor));
 	ImGui::End();
 }
 
