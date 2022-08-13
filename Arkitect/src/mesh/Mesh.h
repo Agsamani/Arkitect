@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 #include "renderer/Buffer.h"
+#include "renderer/VertexArray.h"
 
 // Basic single mesh for now
 
@@ -15,8 +16,7 @@ namespace Arkitect {
 		Mesh(const std::string& path);
 		~Mesh();
 
-		std::shared_ptr<VertexBuffer> GetVertexBuffer() const { return m_VertexBuffer; }
-		std::shared_ptr<IndexBuffer> GetIndexBuffer() const { return m_IndexBuffer; }
+		const std::shared_ptr<VertexArray>& GetVertexArray() { return m_VertexArray; }
 
 		glm::mat4 GetTransform();
 
@@ -29,8 +29,7 @@ namespace Arkitect {
 		void SetScale(glm::vec3 val) { m_Scale = val; }
 	private:
 
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<VertexArray> m_VertexArray;
 
 		glm::vec3 m_Position = glm::vec3(0.0);
 		glm::vec4 m_Rotation = glm::vec4(0.0);

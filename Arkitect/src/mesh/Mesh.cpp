@@ -30,13 +30,17 @@ namespace Arkitect {
 		auto positionBufferView = data["bufferViews"][(int)data["accessors"][positionIndex]["bufferView"]];
 		auto indicesBufferView = data["bufferViews"][(int)data["accessors"][indicesIndex]["bufferView"]];
 
-		m_VertexBuffer = std::make_shared<VertexBuffer>(buffer + (int)positionBufferView["byteOffset"], positionBufferView["byteLength"]);
-		m_IndexBuffer =  std::make_shared<IndexBuffer>(buffer + (int)indicesBufferView["byteOffset"], (int)data["accessors"][indicesIndex]["count"], data["accessors"][indicesIndex]["componentType"]);
+		std::shared_ptr<VertexBuffer> vertexBuffer = std::make_shared<VertexBuffer>(buffer + (int)positionBufferView["byteOffset"], positionBufferView["byteLength"]);
+		std::shared_ptr<IndexBuffer> indexBuffer =  std::make_shared<IndexBuffer>(buffer + (int)indicesBufferView["byteOffset"], (int)data["accessors"][indicesIndex]["count"], data["accessors"][indicesIndex]["componentType"]);
 
 		BufferLayout layout = {
 			{ShaderDataType::Float3, "position"}
 		};
-		m_VertexBuffer->SetLayout(layout);
+		vertexBuffer->SetLayout(layout);
+
+		m_VertexArray = std::make_shared<VertexArray>();
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		bufferFile.close();
 		delete[] buffer;

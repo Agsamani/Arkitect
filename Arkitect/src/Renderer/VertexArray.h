@@ -15,7 +15,7 @@ namespace Arkitect {
 		void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer);
 
 		const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const { return m_IndexBuffer; }
-		const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffer() const { return m_VertexBuffers; }
+		const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const { return m_VertexBuffers; }
 
 	private:
 		uint32_t m_RendererID;

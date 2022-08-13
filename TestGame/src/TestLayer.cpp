@@ -20,9 +20,6 @@ void TestLayer::OnAttach()
 	VAO = std::make_shared<Arkitect::VertexArray>();
 
 	icoMesh = std::make_unique<Arkitect::Mesh>("assets/meshes/basic.gltf");
-	VAO->SetIndexBuffer(icoMesh->GetIndexBuffer());
-	VAO->AddVertexBuffer(icoMesh->GetVertexBuffer());
-
 
 	program = std::make_unique<Arkitect::Program>();
 	program->AttachShader(Arkitect::Shader("assets/shaders/default.vert", Arkitect::ShaderType::Vertex));
@@ -47,7 +44,7 @@ void TestLayer::OnUpdate(float dt)
 	program->UploadUniformMat4("u_TMat", glm::translate(m_Pos));
 	program->UploadUniformMat4("u_Cam", glm::perspective(glm::radians(60.0), 1.6, 0.2, 100.0)); //glm::ortho(-1.0, 1.0, -1.0, 1.0, 1.0, 100.0)
 
-	Arkitect::RenderCommand::DrawIndexed(VAO, 0);
+	Arkitect::RenderCommand::DrawIndexed(icoMesh->GetVertexArray(), 0);
 }
 
 void TestLayer::OnImGuiUpdate()
