@@ -1,12 +1,14 @@
 #version 460 core
 
-layout (location = 0) in vec2 aPos; 
-layout (location = 1) in vec2 aTexCoord; 
+layout (location = 0) in vec3 aPos; 
 
-out vec2 fTexCoord;
+uniform mat4 u_TMat;
+uniform mat4 u_Cam;
+
+out vec3 fColor;
 
 void main()
 {
-    fTexCoord = aTexCoord;
-    gl_Position = vec4(aPos / 2.0, 0.0, 1.0);
+    fColor = aPos;
+    gl_Position = u_Cam * u_TMat* vec4(aPos, 1.0);
 }

@@ -69,11 +69,12 @@ namespace Arkitect {
 	////////////////// INDEX BUFFER //////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////
 
-	IndexBuffer::IndexBuffer(uint32_t* data, uint32_t count)
+	IndexBuffer::IndexBuffer(const void* data, uint32_t count, uint32_t glType)
+		:m_Count(count), m_GlType(glType)
 	{
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-		glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, count * (glType == GL_UNSIGNED_SHORT ? 2 : 4), data, GL_DYNAMIC_DRAW);
 	}
 
 	IndexBuffer::~IndexBuffer()

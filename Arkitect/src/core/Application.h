@@ -8,6 +8,8 @@
 
 int main(int argc, char** argv);
 
+// TODO : std::filesystem::current_path
+
 namespace Arkitect {
 	class Application
 	{

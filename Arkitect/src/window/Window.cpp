@@ -9,6 +9,8 @@
 
 #include "glad/glad.h"
 
+#include "stb_image.h"
+
 
 namespace Arkitect {
 
@@ -57,6 +59,11 @@ namespace Arkitect {
 		}
 		glfwSetWindowUserPointer((GLFWwindow*)m_Window, &m_Data);
 		SetVSync(true);
+
+		// TODO : engine path
+		GLFWimage icon;
+		icon.pixels = stbi_load("../Arkitect/assets/icons/icon3.png", &icon.width, &icon.height, nullptr, 0);
+		glfwSetWindowIcon((GLFWwindow*)m_Window, 1, &icon);
 
 		glfwSetWindowSizeCallback((GLFWwindow*)m_Window, [](GLFWwindow* window, int width, int height)
 			{

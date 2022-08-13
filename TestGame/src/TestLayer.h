@@ -24,6 +24,8 @@ private:
 	std::shared_ptr<Arkitect::VertexArray> VAO;
 
 	std::unique_ptr<Arkitect::Texture2D> testTexture;
+	std::unique_ptr<Arkitect::Mesh> icoMesh;
 
+	glm::vec3 m_Pos = glm::vec3(0.0);
 };
 

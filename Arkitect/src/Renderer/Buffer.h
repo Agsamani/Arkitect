@@ -97,15 +97,18 @@ namespace Arkitect {
 
 	class IndexBuffer {
 	public:
-		IndexBuffer(uint32_t* data, uint32_t count);
+		IndexBuffer(const void* data, uint32_t count, uint32_t glType = 0x1405);
 		~IndexBuffer();
 
 		void Bind() const;
 		void Unbind() const;
 
 		uint32_t GetCount() const { return m_Count; }
+		// TODO : fix this
+		uint32_t GetGlType() const { return m_GlType; }
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_Count;
+		uint32_t m_GlType;
 	};
 }

@@ -14,10 +14,16 @@ project "Arkitect"
 	{
 		"src/**.h",
 		"src/**.cpp",
+
 		"vendor/stb_image/**.h",
 		"vendor/stb_image/**.cpp",
+
 		"vendor/glm/glm/**.hpp",
-		"vendor/glm/glm/**.inl"
+		"vendor/glm/glm/**.inl",
+
+		"vendor/entt/include/**.hpp",
+
+		"vendor/json/**.hpp"
 	}
 
     defines
@@ -34,7 +40,9 @@ project "Arkitect"
         "%{IncludeDir.glad}",
         "%{IncludeDir.imgui}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.stb_image}"
+        "%{IncludeDir.stb_image}",
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.json}"
 	}
 
 	links

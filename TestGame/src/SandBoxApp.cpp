@@ -2,6 +2,7 @@
 #include "core/EntryPoint.h"
 
 #include "TestLayer.h"
+#include "MandleBulbDemo.h"
 
 
 class SandBoxApp : public Arkitect::Application {

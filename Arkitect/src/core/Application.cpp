@@ -30,8 +30,6 @@ namespace Arkitect {
 
 		Arkitect::RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 		RKT_CORE_INFO("Window size: {0}, {1}", m_Window->GetWidth(), m_Window->GetHeight());
-
-		//m_Window->SetVSync(false);
 	}
 
 	void Application::run()
@@ -52,7 +50,7 @@ namespace Arkitect {
 			}
 			// Temp 
 			ImGui::Begin("Render Time:");
-			ImGui::Text(std::to_string(dt.GetMilliseconds()).c_str());
+			ImGui::Text("%s %s",std::to_string(dt.GetMilliseconds()).c_str(), "ms");
 			ImGui::End();
 			//
 			m_ImGuiLayer->End();

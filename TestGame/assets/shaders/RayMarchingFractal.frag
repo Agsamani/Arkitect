@@ -12,6 +12,8 @@ uniform vec3 u_BGColor;
 uniform vec3 u_AColor;
 uniform vec3 u_BColor;
 
+uniform int u_MaxIt;
+uniform float u_Div;
 
 float SphereSDF(vec3 rayPos, vec3 center, float radius) {
     return distance(rayPos, center) - radius;
@@ -65,7 +67,7 @@ float DifferenceSDF(float distA, float distB) {
 
 float SceneSDF(vec3 rayPos) {
     
-    return DE(rayPos);
+    return DE(rayPos/ u_Div);
     //min(SphereSDF(rayPos, vec3(0.0, 0.0, 0.0), 0.7), SphereSDF(rayPos, vec3(1.5, 0.0, 0.0), 1.0));
 }
 
@@ -89,8 +91,8 @@ void main()
 
     vec3 eye = (u_RayRotation * u_Transform * vec4(0.0, 0.0, 0.0, 1.0)).xyz; // u_RayRotation * 
 
-    int MAX_ITERATION = 20;
-    float collisionThreshold = 0.0005;
+    int MAX_ITERATION = u_MaxIt;
+    float collisionThreshold = 0.00005;
     float maxRayDist = 20.0;
 
     vec3 ray = vec3(0.0);//vec3(vec3(screenCoord, planeDist)) / 4.0; // u_RayRotation * 

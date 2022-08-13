@@ -17,33 +17,12 @@ void TestLayer::OnAttach()
 {
 	Arkitect::RenderCommand::SetClearColor({ 0.15, 0.15, 0.15, 1.0 });
 
-
-	float vertices[] = {
-		-1.0f, -1.0f, 0.0f, 0.0f,
-		 1.0f, -1.0f, 1.0f, 0.0f,
-		 1.0f,  1.0f, 1.0f, 1.0f,
-		-1.0f,  1.0f, 0.0f, 1.0f
-	};
-
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
 	VAO = std::make_shared<Arkitect::VertexArray>();
 
-	std::shared_ptr<Arkitect::VertexBuffer> VBO = std::make_shared<Arkitect::VertexBuffer>(vertices, sizeof(vertices));
+	icoMesh = std::make_unique<Arkitect::Mesh>("assets/meshes/basic.gltf");
+	VAO->SetIndexBuffer(icoMesh->GetIndexBuffer());
+	VAO->AddVertexBuffer(icoMesh->GetVertexBuffer());
 
-	Arkitect::BufferLayout layout = {
-		{Arkitect::ShaderDataType::Float2, "position"},
-		{Arkitect::ShaderDataType::Float2, "texCoord"}
-	};
-	VBO->SetLayout(layout);
-
-	std::shared_ptr<Arkitect::IndexBuffer> IBO = std::make_shared<Arkitect::IndexBuffer>(indices, 6);
-
-	VAO->SetIndexBuffer(IBO);
-	VAO->AddVertexBuffer(VBO);
 
 	program = std::make_unique<Arkitect::Program>();
 	program->AttachShader(Arkitect::Shader("assets/shaders/default.vert", Arkitect::ShaderType::Vertex));
@@ -52,9 +31,6 @@ void TestLayer::OnAttach()
 	program->LinkProgram();
 	program->UseProgram();
 
-	testTexture = std::make_unique<Arkitect::Texture2D>("assets/textures/testTex2.png");
-	testTexture->Bind();
-	program->UploadUniformInt("u_Texture", 0);
 }
 
 void TestLayer::OnDetach()
@@ -64,14 +40,21 @@ void TestLayer::OnDetach()
 
 void TestLayer::OnUpdate(float dt)
 {
+
 	Arkitect::RenderCommand::Clear();
 	program->UseProgram();
-	Arkitect::RenderCommand::DrawIndexed(VAO, 6);
+
+	program->UploadUniformMat4("u_TMat", glm::translate(m_Pos));
+	program->UploadUniformMat4("u_Cam", glm::perspective(glm::radians(60.0), 1.6, 0.2, 100.0)); //glm::ortho(-1.0, 1.0, -1.0, 1.0, 1.0, 100.0)
+
+	Arkitect::RenderCommand::DrawIndexed(VAO, 0);
 }
 
 void TestLayer::OnImGuiUpdate()
 {
-
+	ImGui::Begin("Pos");
+	ImGui::DragFloat3("Pos", glm::value_ptr(m_Pos), 0.1);
+	ImGui::End();
 }
 
 void TestLayer::OnEvent(Arkitect::Event& e)
