@@ -28,6 +28,15 @@ void TestLayer::OnAttach()
 	program->LinkProgram();
 	program->UseProgram();
 
+	Arkitect::FramebufferSpec fbSpec;
+	fbSpec.Attachments = { 
+		{Arkitect::TextureDataFormat::RGBA8, Arkitect::TextureFilterFormat::Nearest},
+		{Arkitect::TextureDataFormat::DEPTH24STENCIL8, Arkitect::TextureFilterFormat::Nearest}
+	};
+	fbSpec.Width = 128;
+	fbSpec.Height = 128;
+
+	framebuffer = std::make_shared<Arkitect::Framebuffer>(fbSpec);
 }
 
 void TestLayer::OnDetach()
@@ -37,19 +46,25 @@ void TestLayer::OnDetach()
 
 void TestLayer::OnUpdate(float dt)
 {
-
+	Arkitect::RenderCommand::Clear();
+	framebuffer->Bind();
 	Arkitect::RenderCommand::Clear();
 	program->UseProgram();
 
 	program->UploadUniformMat4("u_TMat", glm::translate(m_Pos));
-	program->UploadUniformMat4("u_Cam", glm::perspective(glm::radians(60.0), 1.6, 0.2, 100.0)); //glm::ortho(-1.0, 1.0, -1.0, 1.0, 1.0, 100.0)
+	program->UploadUniformMat4("u_Cam", glm::perspective(glm::radians(60.0), 1.0, 0.2, 100.0)); //glm::ortho(-1.0, 1.0, -1.0, 1.0, 1.0, 100.0)
 
 	Arkitect::RenderCommand::DrawIndexed(icoMesh->GetVertexArray(), 0);
+	framebuffer->Unbind();
 }
 
 void TestLayer::OnImGuiUpdate()
 {
 	ImGui::Begin("Pos");
+
+	uint64_t textureID = framebuffer->GetColorAttachmentRendererID(0);
+	ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ 1024, 1024 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
 	ImGui::DragFloat3("Pos", glm::value_ptr(m_Pos), 0.1);
 	ImGui::End();
 }

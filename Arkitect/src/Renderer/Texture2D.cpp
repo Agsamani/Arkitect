@@ -32,14 +32,14 @@ namespace Arkitect {
 		return -1;
 	}
 	
-	Texture2D::Texture2D(uint32_t width, uint32_t height, uint8_t channels /*= 4*/, bool pixelized /*= false*/)
+	Texture2D::Texture2D(uint32_t width, uint32_t height, uint8_t channels /*= 4*/, TextureFilterFormat filterFormat)
 		:m_Width(width), m_Height(height), m_Channels(channels)
 	{
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
 		glTextureStorage2D(m_RendererID, 1, GetGLInternalFormat(m_Channels), m_Width, m_Height);
 
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, pixelized ? GL_NEAREST : GL_LINEAR);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, pixelized ? GL_NEAREST : GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, filterFormat == TextureFilterFormat::Nearest ? GL_NEAREST : GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, filterFormat == TextureFilterFormat::Nearest ? GL_NEAREST : GL_LINEAR);
 
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);

@@ -18,6 +18,8 @@
 #include "renderer/Shader.h"
 #include "renderer/Texture2D.h"
 #include "mesh/Mesh.h"
+#include "renderer/Formats.h"
+#include "renderer/Framebuffer.h"
 
 // Vendor
 #include "glm/glm.hpp"

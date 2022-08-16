@@ -1,12 +1,13 @@
 #pragma once
 
 #include <string>
+#include "Formats.h"
 
 namespace Arkitect {
 	class Texture2D
 	{
 	public:
-		Texture2D(uint32_t width, uint32_t height, uint8_t channels = 4, bool pixelized = false);
+		Texture2D(uint32_t width, uint32_t height, uint8_t channels = 4, TextureFilterFormat filterFormat = TextureFilterFormat::Nearest);
 		Texture2D(const std::string& path, bool pixelized = false);
 		~Texture2D();
 

@@ -45,7 +45,7 @@ void MandleBulbDemo::OnAttach()
 	VAO->AddVertexBuffer(VBO);
 
 	program = std::make_unique<Arkitect::Program>();
-	program->AttachShader(Arkitect::Shader("assets/shaders/default.vert", Arkitect::ShaderType::Vertex));
+	program->AttachShader(Arkitect::Shader("assets/shaders/RayMarchingFractal.vert", Arkitect::ShaderType::Vertex));
 	program->AttachShader(Arkitect::Shader("assets/shaders/RayMarchingFractal.frag", Arkitect::ShaderType::Fragment));
 
 	program->LinkProgram();
