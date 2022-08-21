@@ -13,5 +13,8 @@ namespace Arkitect {
 		static glm::vec2 GetMousePosition();
 		static float GetMouseX();
 		static float GetMouseY();
+
+		static void SetCursorPosition(const glm::vec2& pos);
+		static void SetCursorVisibility(bool show);
 	};
 }

@@ -20,6 +20,8 @@
 #include "mesh/Mesh.h"
 #include "renderer/Formats.h"
 #include "renderer/Framebuffer.h"
+#include "renderer/camera/ProjectionCamera.h"
+#include "renderer/camera/ProjectionCameraController.h"
 
 // Vendor
 #include "glm/glm.hpp"

@@ -69,7 +69,16 @@ namespace Arkitect {
 	void RenderCommand::DrawLine(const std::shared_ptr<VertexArray>& vertexArray, uint32_t vertexCount)
 	{
 		vertexArray->Bind();
-		glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, nullptr);
+		uint32_t count = vertexCount ? vertexCount : vertexArray->GetIndexBuffer()->GetCount();
+		glDrawElements(GL_LINE_STRIP, count, vertexArray->GetIndexBuffer()->GetGlType(), nullptr);
+	}
+
+	void RenderCommand::SetLineSmooth(bool smooth)
+	{
+		if (smooth)
+			glEnable(GL_LINE_SMOOTH);
+		else
+			glDisable(GL_LINE_SMOOTH);
 	}
 
 	void RenderCommand::SetLineWidth(float width)

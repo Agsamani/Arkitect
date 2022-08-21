@@ -56,7 +56,7 @@ project "Arkitect"
     filter "system:windows"
 		systemversion "latest"
 
-        filter "configurations:Debug"
+    filter "configurations:Debug"
 		defines "RKT_DEBUG"
 		runtime "Debug"
 		symbols "on"

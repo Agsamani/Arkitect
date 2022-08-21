@@ -232,4 +232,9 @@ namespace Arkitect {
 		return m_ColorAttachmentIDs[index];
 	}
 
+	void Framebuffer::BindAttachmentTexture(int index, int slot)
+	{
+		glBindTextureUnit(slot, GetColorAttachmentRendererID(index));
+	}
+
 }

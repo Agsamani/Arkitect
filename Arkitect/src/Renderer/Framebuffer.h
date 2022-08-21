@@ -45,6 +45,7 @@ namespace Arkitect {
 		void ClearAttachment(uint32_t attachmentIndex, int value) const;
 
 		uint32_t GetColorAttachmentRendererID(int index);
+		void BindAttachmentTexture(int index, int slot);
 
 		const FramebufferSpec& GetSpecification() const { return m_Spec; }
 

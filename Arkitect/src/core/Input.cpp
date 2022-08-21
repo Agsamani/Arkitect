@@ -39,4 +39,21 @@ namespace Arkitect {
 		return GetMousePosition().y;
 	}
 
+	void Input::SetCursorPosition(const glm::vec2& pos)
+	{
+		auto* glfwWindow = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+		glfwSetCursorPos(glfwWindow ,pos.x, pos.y);
+	}
+
+	void Input::SetCursorVisibility(bool show)
+	{
+		auto* glfwWindow = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+		if (show) {
+			glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+		else {
+			glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+	}
+
 }
