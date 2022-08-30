@@ -3,12 +3,11 @@
 #include <glm/glm.hpp>
 
 namespace Arkitect {
-	class ProjectionCamera
-	{
+	class OrthographicCamera {
 	public:
-		ProjectionCamera(float fov, float aspectRatio, float near, float far);
-		~ProjectionCamera() = default;
-			
+		OrthographicCamera(float aspectRatio);
+		~OrthographicCamera() = default;
+
 		const glm::mat4& GetViewProjection() { Recalculate(); return m_ViewProjectionMatrix; }
 		const glm::mat4& GetProjection() { Recalculate(); return m_ProjectionMatrix; }
 		const glm::mat4& GetView() { Recalculate(); return m_ViewMatrix; }
@@ -16,30 +15,25 @@ namespace Arkitect {
 		const glm::vec3& GetPosition() const { return m_Position; }
 		void SetPosition(glm::vec3 position) { m_Position = position; }
 
-		float GetHorizontalAngle() const { return m_HorizontalAngle; }
-		void SetHorizontalAngle(float angle) { m_HorizontalAngle = glm::radians(angle); }
-		float GetVerticalAngle() const { return m_VerticalAngle; }
-		void SetVerticalAngle(float angle) { m_VerticalAngle = glm::radians(angle); }
+		void SetZoomLevel(float zoomLevel) { m_ZoomLevel = zoomLevel; RecalculateProjection(); }
+		float GetZoomLevel() const { return m_ZoomLevel; }
 
-		const glm::vec3& GetFrontDirection() { CalculateFront(); return m_FrontDirection; }
+		void SetAngle(float angle) { m_Angle = angle; }
+		float GetAngle() const { return m_Angle; }
 
 		void SetAspectRatio(float aspectRatio);
 	private:
 		void Recalculate();
 		void RecalculateProjection();
-		void CalculateFront();
 
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ViewProjectionMatrix;
 
-		glm::vec3 m_FrontDirection = glm::vec3(0.0, 0.0, -1.0);
-
 		glm::vec3 m_Position = glm::vec3(0.0);
-		float m_HorizontalAngle = 0.0, m_VerticalAngle = 0.0;
 
-		float m_Fov;
-		float m_Near, m_Far;
+		float m_ZoomLevel = 1.0;
+		float m_Angle = 0.0;
 
 		float m_AspectRatio;
 	};

@@ -30,14 +30,14 @@ namespace Arkitect {
 
 		ProjectionCamera m_Camera;
 
-		glm::vec3 m_CameraPosition = glm::vec3(0.0);
-		float m_CameraHorizontalAngle = 0.0, m_CameraVerticalAngle = 0.0;
+		glm::vec3 m_Position = glm::vec3(0.0);
+		float m_HorizontalAngle = 0.0, m_VerticalAngle = 0.0;
 
 		glm::vec2 m_TempCursorPos;
 		float m_TempHAngle = 0.0, m_TempVAngle = 0.0;
 		bool m_MousePressed = false;
 
-		float m_CameraMovementSpeed = 2.0, m_CameraRotationSpeed = 50.0;
+		float m_CameraMovementSpeed = 4.0, m_CameraRotationSpeed = 50.0;
 	};
 
 }

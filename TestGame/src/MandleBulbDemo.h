@@ -36,7 +36,7 @@ private:
 
 	float divi = 1.0;
 
-	int maxIt = 120;
+	int maxIt = 100;
 
 	bool firstClick = true;
 

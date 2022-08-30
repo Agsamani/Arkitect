@@ -27,6 +27,7 @@ private:
 	std::unique_ptr<Arkitect::Program> frameProgram;
 
 	Arkitect::ProjectionCameraController cameraController;
+	Arkitect::OrthographicCameraController orthoCameraController;
 
 	//Debug
 	std::shared_ptr<Arkitect::VertexArray> debugVao;

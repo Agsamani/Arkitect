@@ -22,6 +22,8 @@
 #include "renderer/Framebuffer.h"
 #include "renderer/camera/ProjectionCamera.h"
 #include "renderer/camera/ProjectionCameraController.h"
+#include "renderer/camera/OrthigraphicCamera.h"
+#include "renderer/camera/OrthographicCameraController.h"
 
 // Vendor
 #include "glm/glm.hpp"

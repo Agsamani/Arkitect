@@ -12,7 +12,7 @@
 #include <glm/gtx/string_cast.hpp>
 
 TestLayer::TestLayer()
-	:Layer("TestLayer"), cameraController(1.6, 60.0)
+	:Layer("TestLayer"), cameraController(1.6, 60.0), orthoCameraController(1.6)
 {
 }
 
@@ -49,7 +49,7 @@ void TestLayer::OnAttach()
 
 
 
-	icoMesh = std::make_unique<Arkitect::Mesh>("assets/meshes/basic.gltf");
+	icoMesh = std::make_unique<Arkitect::Mesh>("assets/meshes/donut.gltf");
 
 	program = std::make_unique<Arkitect::Program>();
 	program->AttachShader(Arkitect::Shader("assets/shaders/default.vert", Arkitect::ShaderType::Vertex));
@@ -63,11 +63,12 @@ void TestLayer::OnAttach()
 		{Arkitect::TextureDataFormat::RGBA8, Arkitect::TextureFilterFormat::Nearest},
 		{Arkitect::TextureDataFormat::DEPTH24STENCIL8, Arkitect::TextureFilterFormat::Nearest}
 	};
-	fbSpec.Width = (uint32_t)(128 * 8 * 1.6);
-	fbSpec.Height = 128 * 8;
+	fbSpec.Width = (uint32_t)(128 * 4 * 1.6);
+	fbSpec.Height = 128 * 4;
 
 	framebuffer = std::make_shared<Arkitect::Framebuffer>(fbSpec);
 	debug_MakeVao();
+
 }
 
 void TestLayer::OnDetach()
@@ -84,8 +85,9 @@ void TestLayer::OnUpdate(float dt)
 
 	
 	cameraController.OnUpdate(dt);
+	orthoCameraController.OnUpdate(dt);
 
-	program->UploadUniformMat4("u_Cam", cameraController.GetCamera().GetViewProjection());
+	program->UploadUniformMat4("u_Cam", orthoCameraController.GetCamera().GetViewProjection());
 
 	Arkitect::RenderCommand::DrawLine(icoMesh->GetVertexArray(), 0);
 	//Arkitect::RenderCommand::DrawLine(debugVao, 0);
@@ -113,13 +115,13 @@ void TestLayer::OnImGuiUpdate()
 	{
 		Arkitect::RenderCommand::SetLineSmooth(false);
 	}
-
 	ImGui::End();
 }
 
 void TestLayer::OnEvent(Arkitect::Event& e)
 {
 	cameraController.OnEvent(e);
+	orthoCameraController.OnEvent(e);
 }
 
 void TestLayer::debug_MakeVao()
