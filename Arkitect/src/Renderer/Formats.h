@@ -13,4 +13,9 @@ namespace Arkitect {
 
 		DEPTH24STENCIL8
 	};
+
+	enum class DataType {
+		None = 0,
+		UNSIGNED_BYTE, BYTE, UNSIGNED_SHORT, SHORT, UNSIGNED_INT, INT, FLOAT
+	};
 }

@@ -1,0 +1,39 @@
+#version 460 core
+layout (local_size_x = 8, local_size_y = 4, local_size_z = 1) in;
+
+layout(rgba8, binding = 0) uniform image2D u_Texture;
+
+void main()
+{
+    ivec2 coord = ivec2(gl_GlobalInvocationID.xy);
+
+    vec4 cellMatrix[3][3];
+    int offset[3] = {-1, 0, 1};
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            cellMatrix[i][j] = imageLoad(u_Texture, coord + ivec2(offset[i], offset[j]));
+        }
+    }
+
+    int neighbourCount = 0;
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (cellMatrix[i][j] == vec4(1.0)) {
+                neighbourCount++;
+            }
+        }
+    }
+
+    if (cellMatrix[1][1] == vec4(1.0)) {
+        neighbourCount--;
+    }
+
+    if (cellMatrix[1][1] == vec4(1.0)) {
+        if (neighbourCount < 2 || neighbourCount > 3) {
+            imageStore(u_Texture, coord, vec4(0.0));
+        }
+    } else if (neighbourCount == 3) {
+        imageStore(u_Texture, coord, vec4(1.0));
+    }
+}

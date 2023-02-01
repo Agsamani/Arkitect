@@ -6,7 +6,7 @@ class MandleBulbDemo : public Arkitect::Layer
 {
 public:
 	MandleBulbDemo()
-		:Layer("MandleBulbDemo")
+		:Layer("MandleBulbDemo"), cameraController(1.6, 60.0)
 	{
 
 	}
@@ -22,6 +22,8 @@ public:
 private:
 	std::unique_ptr<Arkitect::Program> program;
 	std::shared_ptr<Arkitect::VertexArray> VAO;
+
+	Arkitect::ProjectionCameraController cameraController;
 
 	glm::vec3 cPosition;
 	glm::vec4 cameraDir;

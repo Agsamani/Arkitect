@@ -32,7 +32,7 @@ namespace Arkitect {
 		float m_Rotation = 0.0;
 		float m_ZoomLevel = 1.0;
 
-		float m_MovementSpeed = 1.0, m_RotationSpeed = 50.0, m_ZoomSpeed = 0.25;
+		float m_MovementSpeed = 1.8, m_RotationSpeed = 50.0, m_ZoomSpeed = 0.25;
 
 		bool m_RotationLock;
 	};

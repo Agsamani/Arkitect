@@ -73,7 +73,7 @@ namespace Arkitect {
 	bool OrthographicCameraController::OnMouseScrollEvent(MouseScrolledEvent& e)
 	{
 		m_ZoomLevel -= e.GetYOffset() * m_ZoomSpeed;
-		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
+		m_ZoomLevel = std::max(m_ZoomLevel, 0.1f);
 		m_Camera.SetZoomLevel(m_ZoomLevel);
 		return false;
 	}

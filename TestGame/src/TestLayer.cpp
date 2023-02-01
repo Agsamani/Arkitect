@@ -87,7 +87,7 @@ void TestLayer::OnUpdate(float dt)
 	cameraController.OnUpdate(dt);
 	orthoCameraController.OnUpdate(dt);
 
-	program->UploadUniformMat4("u_Cam", orthoCameraController.GetCamera().GetViewProjection());
+	program->UploadUniformMat4("u_Cam", cameraController.GetCamera().GetViewProjection());
 
 	Arkitect::RenderCommand::DrawLine(icoMesh->GetVertexArray(), 0);
 	//Arkitect::RenderCommand::DrawLine(debugVao, 0);

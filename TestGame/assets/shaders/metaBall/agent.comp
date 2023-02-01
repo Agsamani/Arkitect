@@ -1,0 +1,96 @@
+#version 460 core
+layout (local_size_x = 32, local_size_y = 1, local_size_z = 1) in;
+
+layout(rgba32f, binding = 0) uniform image2D u_AgentTex;
+layout(rgba8, binding = 1) uniform image2D u_FieldTex;
+layout(rgba8, binding = 2) uniform image2D u_MainTex;
+
+uniform vec2 u_Dim;
+uniform float u_Speed;
+
+uniform float u_SensorArmLength;
+uniform float u_SensorAngle;
+uniform float u_RotationAngle;
+
+uniform float u_Random;
+
+void main()
+{
+    uint agentIndex = gl_GlobalInvocationID.x;
+    vec4 agent = imageLoad(u_AgentTex, ivec2(agentIndex, 0));
+    vec2 pos = agent.xy;
+    vec2 velocity = agent.zw;
+    
+
+    ivec2 coord = ivec2(((pos + vec2(1.0)) / vec2(2.0)) * u_Dim);
+
+    float theta = atan(velocity.y / velocity.x);
+    if (velocity.x < 0.0) {
+        theta += 3.14156;
+    }
+
+    ivec2 frontCoord = ivec2(coord + vec2(cos(theta), sin(theta)) * u_SensorArmLength);
+    ivec2 leftCoord = ivec2(coord + vec2(cos(theta + u_SensorAngle), sin(theta + u_SensorAngle)) * u_SensorArmLength);
+    ivec2 rightCoord = ivec2(coord + vec2(cos(theta - u_SensorAngle), sin(theta - u_SensorAngle)) * u_SensorArmLength);
+
+
+    //Sensory stage:
+    float ff = imageLoad(u_FieldTex, frontCoord).x;
+    float fl = imageLoad(u_FieldTex, leftCoord).x;
+    float fr = imageLoad(u_FieldTex, rightCoord).x;
+
+    float moveAngle = 1.0 * u_RotationAngle;
+
+    if (ff >= fl && ff >= fr) {
+
+    }
+    else if (ff < fl && ff < fr) {
+        if (u_Random < 0.5) {
+            velocity.x = cos(theta + moveAngle);
+            velocity.y = sin(theta + moveAngle);
+        } else {
+            velocity.x = cos(theta - moveAngle);
+            velocity.y = sin(theta - moveAngle);
+        }
+    } else if (fl < fr) {
+        velocity.x = cos(theta + moveAngle);
+        velocity.y = sin(theta + moveAngle);
+    } else if (fr < fl) {
+        velocity.x = cos(theta - moveAngle);
+        velocity.y = sin(theta - moveAngle);
+    }
+    //
+    // Moving stage:
+    agent.x += velocity.x * u_Speed;
+    agent.y += velocity.y * u_Speed;
+
+    if (agent.x >= 1.0 || agent.x <= -1.0) {
+        velocity.x *= -1;
+        agent.x += velocity.x * u_Speed;
+        // if (agent.x < 0.0) {
+        //     agent.x += 2.0;
+        // } else {
+        //     agent.x -= 2.0;
+        // }
+    }
+    if (agent.y >= 1.0 || agent.y <= -1.0) {
+        velocity.y *= -1;
+        agent.y += velocity.y * u_Speed;
+        // if (agent.y < 0.0) {
+        //     agent.y += 2.0;
+        // } else {
+        //     agent.y -= 2.0;
+        // }
+    }
+    //
+
+    agent.zw = velocity;
+    imageStore(u_AgentTex, ivec2(agentIndex, 0), agent);
+
+    imageStore(u_FieldTex, coord, vec4(1.0, 1.0 ,1.0 ,0.0));
+    // imageStore(u_MainTex, coord, vec4(1.0, 1.0, 1.0, 1.0));
+    // imageStore(u_MainTex, frontCoord, vec4(1.0, 0.0, 0.0, 1.0));
+    // imageStore(u_MainTex, leftCoord, vec4(0.0, 1.0, 0.0, 1.0));
+    // imageStore(u_MainTex, rightCoord, vec4(0.0, 0.0, 1.0, 1.0));
+
+}

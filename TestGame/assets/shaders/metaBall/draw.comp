@@ -1,0 +1,31 @@
+#version 460 core
+layout (local_size_x = 8, local_size_y = 4, local_size_z = 1) in;
+
+layout(rgba8, binding = 0) uniform image2D u_AgentTex;
+layout(rgba8, binding = 1) uniform image2D u_FieldTex;
+layout(rgba8, binding = 2) uniform image2D u_MainTex;
+
+uniform vec4 u_ColorA;
+uniform vec4 u_ColorB;
+
+float CONSTANT = 0.16;
+
+float fn(vec2 value, vec2 center) {
+    return (CONSTANT / sqrt((value.x - center.x) * (value.x - center.x) + (value.y - center.y) * (value.y - center.y)));
+}
+
+void main()
+{
+    ivec2 coord = ivec2(gl_GlobalInvocationID.xy);
+
+    vec2 value = (coord - vec2(512)) / 512.0;
+
+    float c = fn(value, vec2((u_ColorA.x - 0.5) * 2 ,(u_ColorA.y - 0.5) * 2)) + fn(value, vec2(-0.585,0.33));
+    if (c >= 1) {
+        imageStore(u_MainTex, coord, u_ColorA);
+    } else {
+        imageStore(u_MainTex, coord, u_ColorB);
+    }
+    //imageStore(u_MainTex, coord, fieldCell);
+    //imageStore(u_MainTex, coord, vec4(data, data * data, sqrt(data),1.0));
+}

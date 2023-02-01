@@ -1,0 +1,38 @@
+#version 460 core
+layout (local_size_x = 8, local_size_y = 4, local_size_z = 1) in;
+
+layout(rgba8, binding = 0) uniform image2D u_AgentTex;
+layout(rgba8, binding = 1) uniform image2D u_FieldTex;
+layout(rgba8, binding = 2) uniform image2D u_MainTex;
+
+uniform float u_DecayRate;
+
+void main()
+{
+    ivec2 coord = ivec2(gl_GlobalInvocationID.xy);
+
+    vec4 pixel = imageLoad(u_FieldTex, coord);
+
+    float data = 0.0;
+    float weightSum = 0.0;
+    float diffuseMatrix[3][3] = {
+        {2.0, 2.0, 2.0},
+        {2.0, 2.0, 2.0},
+        {2.0, 2.0, 2.0}
+    };
+    int offset[3] = {-1, 0, 1};
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            data += imageLoad(u_FieldTex, coord + ivec2(offset[i], offset[j])).x * diffuseMatrix[i][j];
+            weightSum += diffuseMatrix[i][j];
+        }
+    }
+
+    data /= weightSum;
+    data -= u_DecayRate;
+
+    pixel.b -= u_DecayRate;
+    
+    imageStore(u_FieldTex, coord, vec4(data, 0.0, pixel.b, 1.0));
+    imageStore(u_MainTex, coord, vec4(0.0, 0.0, 0.0, 1.0));
+}

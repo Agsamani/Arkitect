@@ -24,6 +24,7 @@ namespace Arkitect {
 		m_Window->SetEventCallback(RKT_BIND_EVENT_FN(OnEvent));
 
 		RenderCommand::Init();
+		Random::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);

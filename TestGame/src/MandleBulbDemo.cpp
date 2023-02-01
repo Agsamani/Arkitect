@@ -116,6 +116,7 @@ void MandleBulbDemo::OnUpdate(float dt)
 		firstClick = true;
 	}
 
+	cameraController.OnUpdate(dt);
 
 	program->UploadUniformMat4("u_Transform", glm::translate(glm::mat4(1.0f), cPosition));
 	program->UploadUniformMat4("u_RayRotation", cOrientation * newOrientation);
@@ -129,8 +130,8 @@ void MandleBulbDemo::OnUpdate(float dt)
 	program->UploadUniformFloat("u_Div", divi);
 
 
-	//var += 0.15 * dt;
-	//theta -= 0.12 * dt;
+	var += 0.15 * dt;
+	theta -= 0.12 * dt;
 	cOrientation = glm::rotate(glm::mat4(1.0), theta, glm::vec3(0.5, -0.4, 0.7));
 
 	Arkitect::RenderCommand::Clear();
@@ -152,5 +153,5 @@ void MandleBulbDemo::OnImGuiUpdate()
 
 void MandleBulbDemo::OnEvent(Arkitect::Event& e)
 {
-
+	cameraController.OnEvent(e);
 }
