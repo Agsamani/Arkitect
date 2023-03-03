@@ -9,17 +9,18 @@ namespace Arkitect {
 		ProjectionCamera(float fov, float aspectRatio, float near, float far);
 		~ProjectionCamera() = default;
 			
-		const glm::mat4& GetViewProjection() { Recalculate(); return m_ViewProjectionMatrix; }
-		const glm::mat4& GetProjection() { Recalculate(); return m_ProjectionMatrix; }
-		const glm::mat4& GetView() { Recalculate(); return m_ViewMatrix; }
+
+		const glm::mat4& GetViewProjection() { return m_ViewProjectionMatrix; }
+		const glm::mat4& GetProjection() { return m_ProjectionMatrix; }
+		const glm::mat4& GetView() { return m_ViewMatrix; }
 
 		const glm::vec3& GetPosition() const { return m_Position; }
-		void SetPosition(glm::vec3 position) { m_Position = position; }
+		void SetPosition(glm::vec3 position) { m_Position = position; Recalculate();}
 
 		float GetHorizontalAngle() const { return m_HorizontalAngle; }
-		void SetHorizontalAngle(float angle) { m_HorizontalAngle = glm::radians(angle); }
+		void SetHorizontalAngle(float angle) { m_HorizontalAngle = glm::radians(angle); Recalculate(); }
 		float GetVerticalAngle() const { return m_VerticalAngle; }
-		void SetVerticalAngle(float angle) { m_VerticalAngle = glm::radians(angle); }
+		void SetVerticalAngle(float angle) { m_VerticalAngle = glm::radians(angle); Recalculate(); }
 
 		const glm::vec3& GetFrontDirection() { CalculateFront(); return m_FrontDirection; }
 

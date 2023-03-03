@@ -26,6 +26,7 @@
 #include "renderer/camera/OrthigraphicCamera.h"
 #include "renderer/camera/OrthographicCameraController.h"
 #include "renderer/ComputeShader.h"
+#include "renderer/Renderer2D.h"
 
 // Vendor
 #include "glm/glm.hpp"

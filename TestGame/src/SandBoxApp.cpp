@@ -6,12 +6,13 @@
 #include "ComputeTestLayer.h"
 #include "SlimeMouldLayer.h"
 #include "MetaBallLayer.h"
+#include "Renderer2DTestLayer.h"
 
 
 class SandBoxApp : public Arkitect::Application {
 public:
 	SandBoxApp() {
-		PushLayer(new SlimeMouldLayer());
+		PushLayer(new Renderer2DTestLayer());
 	}
 
 	~SandBoxApp() {
