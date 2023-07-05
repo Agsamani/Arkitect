@@ -43,7 +43,9 @@ project "Arkitect"
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.entt}",
         "%{IncludeDir.json}",
-        "%{IncludeDir.Box2D}"
+        "%{IncludeDir.Box2D}",
+		"%{IncludeDir.msdfgen}",
+		"%{IncludeDir.msdfatlasgen}"
 	}
 
 	links
@@ -52,7 +54,8 @@ project "Arkitect"
 		"opengl32.lib",
 		"glad",
 		"imgui",
-		"Box2D"
+		"Box2D",
+		"msdf-atlas-gen"
 	}
 
     filter "system:windows"

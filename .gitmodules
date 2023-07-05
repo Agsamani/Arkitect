@@ -14,3 +14,6 @@
 [submodule "Arkitect/vendor/Box2D"]
 	path = Arkitect/vendor/Box2D
 	url = https://github.com/erincatto/box2d
+[submodule "Arkitect/vendor/msdf-atlans-gen"]
+	path = Arkitect/vendor/msdf-atlas-gen
+	url = https://github.com/TheCherno/msdf-atlas-gen

@@ -24,6 +24,7 @@
 #include "renderer/camera/OrthographicCameraController.h"
 #include "renderer/ComputeShader.h"
 #include "renderer/Renderer2D.h"
+#include "renderer/Font.h"
 
 // Scene
 #include "scene/Scene.h"

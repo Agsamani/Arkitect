@@ -19,6 +19,8 @@ void Renderer2DTestLayer::OnAttach()
 
 	Arkitect::Renderer2D::Init();
 
+	Arkitect::Font font("assets/fonts/Inconsolata-Medium.ttf");
+
 	m_TestTexture = std::make_shared<Arkitect::Texture2D>("assets/textures/testTex.png", 1);
 	m_TestTexture->BindImage(1);
 
@@ -82,6 +84,18 @@ void Renderer2DTestLayer::OnUpdate(float dt)
 void Renderer2DTestLayer::OnEvent(Arkitect::Event& e)
 {
 	m_Camera.OnEvent(e);
+	if (e.GetEventType() == Arkitect::EventType::MouseButtonPressed)
+	{
+		entito = m_TestScene->CreateEntity("A");
+		entito.AddComponent<Arkitect::TransformComponent>();
+		float shade = Arkitect::Random::Float();
+		entito.AddComponent<Arkitect::SpriteComponent>(glm::vec4(shade*0.5 + 0.5, shade*0.6, shade*0.2 + 0.7, 1.0f));
+		entito.AddComponent<Arkitect::RigidBody2DComponent>();
+		entito.AddComponent<Arkitect::BoxCollider2DComponent>();
+		entito.GetComponent<Arkitect::RigidBody2DComponent>().Type = Arkitect::RigidBody2DComponent::BodyType::Dynamic;
+		m_TestScene->OnSceneStart();
+
+	}
 }
 
 void Renderer2DTestLayer::OnImGuiUpdate()

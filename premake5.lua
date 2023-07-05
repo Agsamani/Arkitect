@@ -17,6 +17,7 @@ group "Dependencies"
 	include "Arkitect/vendor/glad"
 	include "Arkitect/vendor/imgui"
 	include "Arkitect/vendor/Box2D"
+	include "Arkitect/vendor/msdf-atlas-gen"
 group ""
 
 include "Arkitect"
