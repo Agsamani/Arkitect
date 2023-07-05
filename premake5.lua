@@ -16,6 +16,7 @@ group "Dependencies"
 	include "Arkitect/vendor/GLFW"
 	include "Arkitect/vendor/glad"
 	include "Arkitect/vendor/imgui"
+	include "Arkitect/vendor/Box2D"
 group ""
 
 include "Arkitect"

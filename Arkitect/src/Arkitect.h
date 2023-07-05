@@ -6,9 +6,6 @@
 #include "events/Event.h"
 #include "core/Layer.h"
 #include "core/Input.h"
-#include "scene/Scene.h"
-#include "scene/Entity.h"
-#include "scene/Components.h"
 #include "core/Utils.h"
 
 // Renderer
@@ -27,6 +24,11 @@
 #include "renderer/camera/OrthographicCameraController.h"
 #include "renderer/ComputeShader.h"
 #include "renderer/Renderer2D.h"
+
+// Scene
+#include "scene/Scene.h"
+#include "scene/Entity.h"
+#include "scene/Components.h"
 
 // Vendor
 #include "glm/glm.hpp"

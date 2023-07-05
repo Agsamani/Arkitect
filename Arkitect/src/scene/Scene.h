@@ -5,6 +5,13 @@
 
 #include "core/Deltatime.h"
 
+//Temp
+#include "Renderer/camera/OrthigraphicCamera.h"
+#include "renderer/Renderer2D.h"
+
+class b2World;
+class b2Body;
+
 namespace Arkitect {
 	class Entity;
 
@@ -23,10 +30,25 @@ namespace Arkitect {
 			return m_Registry.view<Components...>();
 		}
 
+		void OnSceneStart();
+		void OnSceneUpdate(Deltatime dt, const OrthographicCamera& camera);
+
 		void OnUpdate(Deltatime dt);
+
+		//Temp
+		void OnDraw(const OrthographicCamera& camera);
+
+	private:
+		void OnPhysics2DStart();
 
 	private:
 		entt::registry m_Registry;
+		b2World* m_PhysicsWorld = nullptr;
+
+		b2World* m_PhyisicsWorld;
+		//Temp
+		b2Body* m_B2Body;
+		b2Body* m_B2Ground;
 
 		friend class Entity;
 	};

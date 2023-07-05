@@ -13,11 +13,13 @@ public:
 	void OnUpdate(float dt) override;
 	void OnEvent(Arkitect::Event& e) override;
 private:
+	Arkitect::Entity entito;
 
-	std::unique_ptr<Arkitect::Renderer2D> m_Renderer2D;
 	Arkitect::OrthographicCameraController m_Camera;
 
 	std::shared_ptr<Arkitect::Texture2D> m_TestTexture;
+
+	std::unique_ptr<Arkitect::Scene> m_TestScene;
 
 	glm::vec4 m_QuadColorA = glm::vec4(1.0);
 	glm::vec4 m_QuadColorB = glm::vec4(1.0);

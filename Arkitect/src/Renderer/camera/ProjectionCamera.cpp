@@ -33,7 +33,7 @@ namespace Arkitect {
 	void ProjectionCamera::RecalculateProjection()
 	{
 		// TODO : proper ortho system
-		if (m_Fov > 0.01)
+		if (m_Fov > 0.1)
 			m_ProjectionMatrix = glm::perspective(m_Fov, m_AspectRatio, m_Near, m_Far);
 		else
 			m_ProjectionMatrix = glm::ortho(-m_AspectRatio, m_AspectRatio, -1.0f, 1.0f, m_Near, m_Far);

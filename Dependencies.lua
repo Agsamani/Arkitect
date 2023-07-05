@@ -7,4 +7,5 @@ IncludeDir["glm"] = "%{wks.location}/Arkitect/vendor/glm"
 IncludeDir["stb_image"] = "%{wks.location}/Arkitect/vendor/stb_image"
 IncludeDir["entt"] = "%{wks.location}/Arkitect/vendor/entt/include"
 IncludeDir["json"] = "%{wks.location}/Arkitect/vendor/json"
+IncludeDir["Box2D"] = "%{wks.location}/Arkitect/vendor/Box2D/include"
 

@@ -16,8 +16,8 @@ namespace Arkitect {
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{
-			if (!HasComponent()) {
-				RKT_CORE_ERROR("Entity does not have component!");
+			if (HasComponent<T>()) {
+				RKT_CORE_ERROR("Entity already has component!");
 			}
 			T& component = m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
 			return component;
@@ -32,7 +32,7 @@ namespace Arkitect {
 
 		template<typename T>
 		T& GetComponent() {
-			if (!HasComponent()) {
+			if (!HasComponent<T>()) {
 				RKT_CORE_ERROR("Entity does not have component!");
 			}
 			return m_Scene->m_Registry.get<T>(m_EntityHandle);
@@ -40,7 +40,7 @@ namespace Arkitect {
 
 		template<typename T>
 		bool HasComponent() {
-			return m_Scene->m_Registry.has<T>(m_EntityHandle);
+			return m_Scene->m_Registry.all_of<T>(m_EntityHandle);
 		}
 
 		template<typename T>

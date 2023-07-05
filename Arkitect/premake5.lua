@@ -42,7 +42,8 @@ project "Arkitect"
         "%{IncludeDir.glm}",
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.entt}",
-        "%{IncludeDir.json}"
+        "%{IncludeDir.json}",
+        "%{IncludeDir.Box2D}"
 	}
 
 	links
@@ -50,7 +51,8 @@ project "Arkitect"
 		"GLFW",
 		"opengl32.lib",
 		"glad",
-		"imgui"
+		"imgui",
+		"Box2D"
 	}
 
     filter "system:windows"

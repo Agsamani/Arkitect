@@ -11,3 +11,6 @@
 [submodule "Arkitect/vendor/glm"]
 	path = Arkitect/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Arkitect/vendor/Box2D"]
+	path = Arkitect/vendor/Box2D
+	url = https://github.com/erincatto/box2d

@@ -121,4 +121,14 @@ namespace Arkitect {
 
 	}
 
+	void Renderer2D::DrawSprite(const glm::mat4& transform, const SpriteComponent& sprite)
+	{
+		if (sprite.Texture) {
+			DrawQuad(transform, sprite.Texture, sprite.Color);
+		}
+		else {
+			DrawQuad(transform, sprite.Color);
+		}
+	}
+
 }
