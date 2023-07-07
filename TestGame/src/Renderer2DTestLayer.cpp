@@ -9,7 +9,7 @@
 
 
 Renderer2DTestLayer::Renderer2DTestLayer()
-	:Layer("Renderer2DLayer"), m_Camera(1.6)
+	:Layer("Renderer2DLayer"), m_Camera(1.6), font(Arkitect::Font("assets/fonts/Inconsolata-Medium.ttf"))
 {
 }
 
@@ -19,7 +19,7 @@ void Renderer2DTestLayer::OnAttach()
 
 	Arkitect::Renderer2D::Init();
 
-	Arkitect::Font font("assets/fonts/Inconsolata-Medium.ttf");
+	
 
 	m_TestTexture = std::make_shared<Arkitect::Texture2D>("assets/textures/testTex.png", 1);
 	m_TestTexture->BindImage(1);
@@ -47,6 +47,8 @@ void Renderer2DTestLayer::OnAttach()
 	gt.Rotation.z = 0.3;
 
 	m_TestScene->OnSceneStart();
+
+	// TODO : opengl alpha blending
 }
 
 void Renderer2DTestLayer::OnDetach()
@@ -65,19 +67,8 @@ void Renderer2DTestLayer::OnUpdate(float dt)
 
 	Arkitect::Renderer2D::BeginScene(m_Camera.GetCamera());
 
-// 	int maxIt = 16;
-// 	float mx = 1.6 * ((Arkitect::Input::GetMouseX() / float(2048)) - 0.5) * 2;
-// 	float my = ((Arkitect::Input::GetMouseY() / float(1280)) - 0.5) * 2;
-// 	for (int i = 0; i < maxIt; i++) {
-// 		glm::mat4 transform =
-// 			glm::translate(glm::mat4(1.0f), glm::vec3(((maxIt - i) / float(maxIt)) * mx, (-(maxIt - i) / float(maxIt)) * my, 0.0))
-// 			* glm::rotate(glm::mat4(1.0f), glm::radians(((maxIt - i) / float(maxIt) * 360.0f * my)), glm::vec3(0, 0, 1))
-// 			* glm::scale(glm::mat4(1.0), glm::vec3((i + 1) / (1 * float(maxIt)), (i + 1) / float(maxIt), 1.0));
-// 		float lerpval = i / float(maxIt);
-// 		glm::vec4 color = m_QuadColorA + (m_QuadColorB - m_QuadColorA) * lerpval;
-// 		Arkitect::Renderer2D::DrawQuad(transform, color);
-// 	}
-// 	
+	Arkitect::Renderer2D::DrawQuad(glm::mat4(1.0), font.GetAtlasTexture(), glm::vec4(1.0));
+
 	Arkitect::Renderer2D::EndScene();
 }
 
@@ -89,7 +80,7 @@ void Renderer2DTestLayer::OnEvent(Arkitect::Event& e)
 		entito = m_TestScene->CreateEntity("A");
 		entito.AddComponent<Arkitect::TransformComponent>();
 		float shade = Arkitect::Random::Float();
-		entito.AddComponent<Arkitect::SpriteComponent>(glm::vec4(shade*0.5 + 0.5, shade*0.6, shade*0.2 + 0.7, 1.0f));
+		entito.AddComponent<Arkitect::SpriteComponent>(glm::vec4(shade*0.6, shade * 0.5 + 0.5, shade*0.2 + 0.7, 1.0f));
 		entito.AddComponent<Arkitect::RigidBody2DComponent>();
 		entito.AddComponent<Arkitect::BoxCollider2DComponent>();
 		entito.GetComponent<Arkitect::RigidBody2DComponent>().Type = Arkitect::RigidBody2DComponent::BodyType::Dynamic;
