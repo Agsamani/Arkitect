@@ -9,7 +9,7 @@
 
 
 Renderer2DTestLayer::Renderer2DTestLayer()
-	:Layer("Renderer2DLayer"), m_Camera(1.6), font(Arkitect::Font("assets/fonts/Inconsolata-Medium.ttf"))
+	:Layer("Renderer2DLayer"), m_Camera(1.6), font(std::make_shared<Arkitect::Font>("assets/fonts/opensans/OpenSans-Regular.ttf"))
 {
 }
 
@@ -19,7 +19,6 @@ void Renderer2DTestLayer::OnAttach()
 
 	Arkitect::Renderer2D::Init();
 
-	
 
 	m_TestTexture = std::make_shared<Arkitect::Texture2D>("assets/textures/testTex.png", 1);
 	m_TestTexture->BindImage(1);
@@ -35,7 +34,7 @@ void Renderer2DTestLayer::OnAttach()
 	auto& x = entito.GetComponent<Arkitect::RigidBody2DComponent>();
 	x.Type = Arkitect::RigidBody2DComponent::BodyType::Dynamic;
 
-	Arkitect::Entity entitoi = m_TestScene->CreateEntity("Ho");
+	entitoi = m_TestScene->CreateEntity("Ho");
 	entitoi.AddComponent<Arkitect::TransformComponent>();
 	entitoi.AddComponent<Arkitect::SpriteComponent>(glm::vec4(0.81f, 0.27f, 0.46f, 1.0f));
 	entitoi.AddComponent<Arkitect::RigidBody2DComponent>();
@@ -49,6 +48,7 @@ void Renderer2DTestLayer::OnAttach()
 	m_TestScene->OnSceneStart();
 
 	// TODO : opengl alpha blending
+
 }
 
 void Renderer2DTestLayer::OnDetach()
@@ -67,7 +67,7 @@ void Renderer2DTestLayer::OnUpdate(float dt)
 
 	Arkitect::Renderer2D::BeginScene(m_Camera.GetCamera());
 
-	Arkitect::Renderer2D::DrawQuad(glm::mat4(1.0), font.GetAtlasTexture(), glm::vec4(1.0));
+	Arkitect::Renderer2D::DrawText(font, std::to_string(counter), glm::scale(glm::mat4(1.0f), glm::vec3(3.0f)));
 
 	Arkitect::Renderer2D::EndScene();
 }
@@ -85,7 +85,7 @@ void Renderer2DTestLayer::OnEvent(Arkitect::Event& e)
 		entito.AddComponent<Arkitect::BoxCollider2DComponent>();
 		entito.GetComponent<Arkitect::RigidBody2DComponent>().Type = Arkitect::RigidBody2DComponent::BodyType::Dynamic;
 		m_TestScene->OnSceneStart();
-
+		counter++;
 	}
 }
 

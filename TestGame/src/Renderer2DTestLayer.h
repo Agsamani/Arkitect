@@ -14,6 +14,7 @@ public:
 	void OnEvent(Arkitect::Event& e) override;
 private:
 	Arkitect::Entity entito;
+	Arkitect::Entity entitoi;
 
 	Arkitect::OrthographicCameraController m_Camera;
 
@@ -24,5 +25,6 @@ private:
 	glm::vec4 m_QuadColorA = glm::vec4(1.0);
 	glm::vec4 m_QuadColorB = glm::vec4(1.0);
 
-	Arkitect::Font font;
+	std::shared_ptr<Arkitect::Font> font;
+	int counter = 1;
 };

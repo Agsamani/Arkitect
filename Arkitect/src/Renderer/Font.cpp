@@ -25,7 +25,10 @@ namespace Arkitect {
 
 		msdfgen::BitmapConstRef<T, N> bitmap = (msdfgen::BitmapConstRef<T, N>)generator.atlasStorage();
 
-		std::shared_ptr<Texture2D> texture = std::make_shared<Texture2D>(bitmap.width, bitmap.height, 3);
+		TextureSpec spec;
+		spec.FilterFormat = TextureFilterFormat::Linear;
+		spec.Type = DataType::UNSIGNED_BYTE;
+		std::shared_ptr<Texture2D> texture = std::make_shared<Texture2D>(bitmap.width, bitmap.height, 3, spec);
 		texture->SetData((void*)bitmap.pixels, bitmap.width * bitmap.height * 3);
 		return texture;
 	}
