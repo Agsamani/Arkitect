@@ -4,6 +4,7 @@
 #include <entt.hpp>
 
 #include "core/Deltatime.h"
+#include "events/Event.h"
 
 //Temp
 #include "Renderer/camera/OrthigraphicCamera.h"
@@ -34,6 +35,7 @@ namespace Arkitect {
 		void OnSceneUpdate(Deltatime dt, const OrthographicCamera& camera);
 
 		void OnUpdate(Deltatime dt);
+		void OnEvent(Event& e);
 
 		//Temp
 		void OnDraw(const OrthographicCamera& camera);

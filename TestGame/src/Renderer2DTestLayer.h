@@ -22,9 +22,6 @@ private:
 
 	std::unique_ptr<Arkitect::Scene> m_TestScene;
 
-	glm::vec4 m_QuadColorA = glm::vec4(1.0);
-	glm::vec4 m_QuadColorB = glm::vec4(1.0);
-
 	std::shared_ptr<Arkitect::Font> font;
 	int counter = 1;
 };

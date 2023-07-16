@@ -1,6 +1,7 @@
 #include "rktpch.h"
 #include "Scene.h"
 #include "Entity.h"
+#include "ScriptableEntity.h"
 
 // Box2D
 #include "box2d/b2_world.h"
@@ -28,6 +29,15 @@ namespace Arkitect {
 	Scene::~Scene()
 	{
 		delete m_PhyisicsWorld;
+
+		// TODO: move to scene stop or sth
+		auto view = m_Registry.view<ScriptComponent>();
+		for (auto e : view) {
+			Entity entity = { e , this };
+			ScriptComponent& sc = entity.GetComponent<ScriptComponent>();
+			sc.instance->OnDestroy();
+			sc.DestroyScript();
+		}
 	}
 
 	Entity Scene::CreateEntity(const std::string& name /*= std::string()*/)
@@ -43,6 +53,14 @@ namespace Arkitect {
 
 	void Scene::OnSceneStart()
 	{
+		auto view = m_Registry.view<ScriptComponent>();
+		for (auto e : view) {
+			Entity entity = { e , this };
+			ScriptComponent& sc = entity.GetComponent<ScriptComponent>();
+			sc.InstantiateScript();
+			sc.instance->OnCreate();
+		}
+
 		OnPhysics2DStart();
 	}
 
@@ -63,22 +81,44 @@ namespace Arkitect {
 
 	void Scene::OnUpdate(Deltatime dt)
 	{
-		int32 velocityIterations = 6;
-		int32 positionIterations = 2;
+		{
+			auto view = m_Registry.view<ScriptComponent>();
+			for (auto e : view) {
+				Entity entity = { e , this };
+				entity.GetComponent<ScriptComponent>().instance->OnUpdate(dt);
+			}
+		}
 
-		m_PhyisicsWorld->Step(dt, velocityIterations, positionIterations);
+		{
+			int32 velocityIterations = 6;
+			int32 positionIterations = 2;
 
-		auto view = m_Registry.view<RigidBody2DComponent>();
-		for (auto e : view) {
-			Entity entity = { e, this };
-			auto& transform = entity.GetComponent<TransformComponent>();
-			auto& rb2d = entity.GetComponent<RigidBody2DComponent>();
+			m_PhyisicsWorld->Step(dt, velocityIterations, positionIterations);
 
-			b2Body* body = (b2Body*)rb2d.RuntimeBody;
-			auto const& pos = body->GetPosition();
-			transform.Translation.x = pos.x;
-			transform.Translation.y = pos.y;
-			transform.Rotation.z = body->GetAngle();
+			auto view = m_Registry.view<RigidBody2DComponent>();
+			for (auto e : view) {
+				Entity entity = { e, this };
+				auto& transform = entity.GetComponent<TransformComponent>();
+				auto& rb2d = entity.GetComponent<RigidBody2DComponent>();
+
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				auto const& pos = body->GetPosition();
+				transform.Translation.x = pos.x;
+				transform.Translation.y = pos.y;
+				transform.Rotation.z = body->GetAngle();
+			}
+		}
+	}
+
+	void Scene::OnEvent(Event& e)
+	{
+		auto view = m_Registry.view<ScriptComponent>();
+		for (auto ent : view) {
+			if (e.Handled) {
+				break;
+			}
+			Entity entity = { ent , this };
+			entity.GetComponent<ScriptComponent>().instance->OnEvent(e);
 		}
 	}
 

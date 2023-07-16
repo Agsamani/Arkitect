@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "renderer/Texture.h"
 
 #include <glm/glm.hpp>
@@ -63,4 +65,28 @@ namespace Arkitect {
 	};
 
 	// TODO: Circle collider
+
+	// Scripts
+	class ScriptableEntity;
+
+	struct ScriptComponent {
+		ScriptableEntity* instance = nullptr;
+
+		std::function<void()> InstantiateScript;
+		std::function<void()> DestroyScript;
+
+		template<typename T, typename... Args> // May have bugs?
+		void Bind(Args&&... args) {
+
+			InstantiateScript = [&]() {
+				instance = static_cast<ScriptableEntity*>(new T(std::forward<Args>(args)...));
+			};
+
+			DestroyScript = [&]() {
+				delete instance;
+				instance = nullptr;
+			};
+
+		}
+	};
 }

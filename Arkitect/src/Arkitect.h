@@ -30,6 +30,7 @@
 #include "scene/Scene.h"
 #include "scene/Entity.h"
 #include "scene/Components.h"
+#include "scene/ScriptableEntity.h"
 
 // Vendor
 #include "glm/glm.hpp"

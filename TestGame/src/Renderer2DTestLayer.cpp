@@ -45,10 +45,21 @@ void Renderer2DTestLayer::OnAttach()
 	gt.Scale.x = 10;
 	gt.Rotation.z = 0.3;
 
-	m_TestScene->OnSceneStart();
 
 	// TODO : opengl alpha blending
 
+	class Fool : public Arkitect::ScriptableEntity {
+	public:
+		Fool(int a) {};
+
+		void OnUpdate(Arkitect::Deltatime dt) override {
+			RKT_CORE_INFO(dt);
+		}
+	};
+
+	entito.AddComponent<Arkitect::ScriptComponent>().Bind<Fool>(3);
+
+	m_TestScene->OnSceneStart();
 }
 
 void Renderer2DTestLayer::OnDetach()
@@ -91,8 +102,5 @@ void Renderer2DTestLayer::OnEvent(Arkitect::Event& e)
 
 void Renderer2DTestLayer::OnImGuiUpdate()
 {
-	ImGui::Begin("color");
-	ImGui::ColorEdit4("QuadA", glm::value_ptr(m_QuadColorA));
-	ImGui::ColorEdit4("QuadB", glm::value_ptr(m_QuadColorB));
-	ImGui::End();
+	
 }
