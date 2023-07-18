@@ -15,6 +15,7 @@ public:
 private:
 	Arkitect::Entity entito;
 	Arkitect::Entity entitoi;
+	Arkitect::Entity textEntito;
 
 	Arkitect::OrthographicCameraController m_Camera;
 

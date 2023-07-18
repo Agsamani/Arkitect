@@ -69,11 +69,22 @@ namespace Arkitect {
 
 		Renderer2D::BeginScene(camera);
 
-		auto group = m_Registry.group<SpriteComponent>(entt::get<TransformComponent>);
-		for (auto entity : group) {
-			auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
+		{
+			auto group = m_Registry.group<SpriteComponent>(entt::get<TransformComponent>);
+			for (auto entity : group) {
+				auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
 
-			Renderer2D::DrawSprite(transform.GetTransform(), sprite);
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite);
+			}
+		}
+
+		{
+			auto group = m_Registry.group<TextComponent>(entt::get<TransformComponent>);
+			for (auto entity : group) {
+				auto [transform, text] = group.get<TransformComponent, TextComponent>(entity);
+
+				Renderer2D::DrawText(text.TextString, text, transform.GetTransform());
+			}
 		}
 
 		Renderer2D::EndScene();

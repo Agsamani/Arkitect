@@ -140,7 +140,7 @@ namespace Arkitect {
 		}
 	}
 
-	void Renderer2D::DrawText(std::shared_ptr<Font> font, const std::string& text, const glm::mat4& transform)
+	void Renderer2D::DrawText(std::shared_ptr<Font> font, const std::string& text, const TextParams& textParams, const glm::mat4& transform)
 	{
 		QuadVertex Vertices[4];
 
@@ -164,7 +164,7 @@ namespace Arkitect {
 			if (character == '\n')
 			{
 				x = 0;
-				y -= fsScale * metrics.lineHeight;
+				y -= fsScale * metrics.lineHeight + textParams.LineSpacing;
 				continue;
 			}
 
@@ -179,13 +179,13 @@ namespace Arkitect {
 					advance = (float)dAdvance;
 				}
 
-				x += fsScale * advance;
+				x += fsScale * advance + textParams.Kerning;
 				continue;
 			}
 
 			if (character == '\t')
 			{
-				x += 4.0f * (fsScale * spaceGlyphAdvance);
+				x += 4.0f * (fsScale * spaceGlyphAdvance + textParams.Kerning);
 				continue;
 			}
 
@@ -215,19 +215,19 @@ namespace Arkitect {
 			texCoordMax *= glm::vec2(texelWidth, texelHeight);
 
 			Vertices[0].Position = glm::vec2((transform * glm::vec4(quadMin, 0.0f, 1.0f)));
-			Vertices[0].Color = glm::vec4(1.0);
+			Vertices[0].Color = textParams.Color;
 			Vertices[0].TexCoord = texCoordMin;
 
 			Vertices[1].Position = glm::vec2(((transform * glm::vec4(quadMax.x, quadMin.y, 0.0f, 1.0f))));
-			Vertices[1].Color = glm::vec4(1.0);
+			Vertices[1].Color = textParams.Color;
 			Vertices[1].TexCoord = { texCoordMax.x, texCoordMin.y };
 
 			Vertices[2].Position = glm::vec2(((transform * glm::vec4(quadMax, 0.0f, 1.0f))));
-			Vertices[2].Color = glm::vec4(1.0);
+			Vertices[2].Color = textParams.Color;
 			Vertices[2].TexCoord = texCoordMax;
 
 			Vertices[3].Position = glm::vec2(((transform * glm::vec4(quadMin.x, quadMax.y, 0.0f, 1.0f))));
-			Vertices[3].Color = glm::vec4(1.0);
+			Vertices[3].Color = textParams.Color;
 			Vertices[3].TexCoord = { texCoordMin.x, texCoordMax.y };
 
 			s_Data.QuadVB->SetData(Vertices, sizeof(Vertices));
@@ -245,9 +245,18 @@ namespace Arkitect {
 				char nextCharacter = text[i + 1];
 				fontGeometry.getAdvance(advance, character, nextCharacter);
 
-				x += fsScale * advance;
+				x += fsScale * advance + textParams.Kerning;
 			}
 		}
+	}
+
+	void Renderer2D::DrawText(const std::string& text, const TextComponent& tc, const glm::mat4& transform)
+	{
+		TextParams textParams;
+		textParams.Color = tc.Color;
+		textParams.Kerning = tc.Kerning;
+		textParams.LineSpacing = tc.LineSpacing;
+		Renderer2D::DrawText(tc.FontAsset, text, textParams, transform);
 	}
 
 }

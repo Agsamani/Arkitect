@@ -45,20 +45,10 @@ void Renderer2DTestLayer::OnAttach()
 	gt.Scale.x = 10;
 	gt.Rotation.z = 0.3;
 
-
+	textEntito = m_TestScene->CreateEntity("text");
+	textEntito.AddComponent<Arkitect::TextComponent>().TextString = "1";
+	textEntito.AddComponent<Arkitect::TransformComponent>().Scale = glm::vec3(4.0f, 4.0f, 1.0f);
 	// TODO : opengl alpha blending
-
-	class Fool : public Arkitect::ScriptableEntity {
-	public:
-		Fool(int a) {};
-
-		void OnUpdate(Arkitect::Deltatime dt) override {
-			RKT_CORE_INFO(dt);
-		}
-	};
-
-	entito.AddComponent<Arkitect::ScriptComponent>().Bind<Fool>(3);
-
 	m_TestScene->OnSceneStart();
 }
 
@@ -75,12 +65,6 @@ void Renderer2DTestLayer::OnUpdate(float dt)
 
 	m_TestScene->OnUpdate(dt);
 	m_TestScene->OnSceneUpdate(dt, m_Camera.GetCamera());
-
-	Arkitect::Renderer2D::BeginScene(m_Camera.GetCamera());
-
-	Arkitect::Renderer2D::DrawText(font, std::to_string(counter), glm::scale(glm::mat4(1.0f), glm::vec3(3.0f)));
-
-	Arkitect::Renderer2D::EndScene();
 }
 
 void Renderer2DTestLayer::OnEvent(Arkitect::Event& e)
@@ -97,6 +81,8 @@ void Renderer2DTestLayer::OnEvent(Arkitect::Event& e)
 		entito.GetComponent<Arkitect::RigidBody2DComponent>().Type = Arkitect::RigidBody2DComponent::BodyType::Dynamic;
 		m_TestScene->OnSceneStart();
 		counter++;
+
+		textEntito.GetComponent<Arkitect::TextComponent>().TextString = std::to_string(counter);
 	}
 }
 

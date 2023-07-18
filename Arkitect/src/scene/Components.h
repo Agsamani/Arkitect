@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "renderer/Texture.h"
+#include "renderer/Font.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -88,5 +89,14 @@ namespace Arkitect {
 			};
 
 		}
+	};
+
+	// Text
+	struct TextComponent {
+		std::string TextString;
+		std::shared_ptr<Font> FontAsset = Font::GetDefault();
+		glm::vec4 Color{ 1.0f };
+		float Kerning = 0.0f;
+		float LineSpacing = 0.0f;
 	};
 }

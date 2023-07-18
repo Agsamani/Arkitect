@@ -37,9 +37,6 @@ namespace Arkitect {
 		void OnUpdate(Deltatime dt);
 		void OnEvent(Event& e);
 
-		//Temp
-		void OnDraw(const OrthographicCamera& camera);
-
 	private:
 		void OnPhysics2DStart();
 
@@ -48,10 +45,6 @@ namespace Arkitect {
 		b2World* m_PhysicsWorld = nullptr;
 
 		b2World* m_PhyisicsWorld;
-		//Temp
-		b2Body* m_B2Body;
-		b2Body* m_B2Ground;
-
 		friend class Entity;
 	};
 }

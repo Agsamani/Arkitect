@@ -20,6 +20,13 @@ namespace Arkitect {
 
 		static void DrawSprite(const glm::mat4& transform, const SpriteComponent& sprite);
 
-		static void DrawText(std::shared_ptr<Font> font, const std::string& text, const glm::mat4& transform);
+		struct TextParams
+		{
+			glm::vec4 Color{ 1.0f };
+			float Kerning = 0.0f;
+			float LineSpacing = 0.0f;
+		};
+		static void DrawText(std::shared_ptr<Font> font, const std::string& text, const TextParams& textParams, const glm::mat4& transform);
+		static void DrawText(const std::string& text, const TextComponent& tc, const glm::mat4& transform);
 	};
 }
