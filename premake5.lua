@@ -2,7 +2,7 @@ include "Dependencies.lua"
 
 workspace "Arkitect"
     architecture "x64"
-    startproject "TestGame"
+    startproject "PacMan"
 
     configurations
 	{
@@ -22,3 +22,4 @@ group ""
 
 include "Arkitect"
 include "TestGame"
+include "PacMan"
