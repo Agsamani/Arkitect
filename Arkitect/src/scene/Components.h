@@ -4,6 +4,7 @@
 
 #include "renderer/Texture.h"
 #include "renderer/Font.h"
+#include "renderer/SpriteSheet.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -30,8 +31,13 @@ namespace Arkitect {
 
 	struct SpriteComponent {
 		glm::vec4 Color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glm::vec2 MinCoord = { 0.0, 0.0 };
+		glm::vec2 MaxCoord = { 1.0, 1.0 };
 		std::shared_ptr<Texture2D> Texture;
 		float TilingFactor = 1.0f;
+
+		void SetSpriteSheet(SpriteSheet& spriteSheet);
+		void SetSpriteSheet(SpriteSheet& spriteSheet, const glm::u32vec2& minPixel, const glm::u32vec2& maxPixel);
 
 		SpriteComponent() = default;
 		SpriteComponent(const SpriteComponent&) = default;

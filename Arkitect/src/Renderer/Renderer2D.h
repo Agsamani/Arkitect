@@ -16,7 +16,7 @@ namespace Arkitect {
 		static void EndScene();
 
 		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
-		static void DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D>& texture, const glm::vec4& tintColor);
+		static void DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D>& texture, const glm::vec2* tecCoords, const glm::vec4& tintColor);
 
 		static void DrawSprite(const glm::mat4& transform, const SpriteComponent& sprite);
 

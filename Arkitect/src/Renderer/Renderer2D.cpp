@@ -100,22 +100,22 @@ namespace Arkitect {
 
 	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
 	{
-		DrawQuad(transform, s_Data.QuadWhiteTexture, color);
+		glm::vec2 TexCoords[4] = { {0.0, 0.0},
+							{1.0, 0.0},
+							{1.0, 1.0},
+							{0.0, 1.0} };
+		DrawQuad(transform, s_Data.QuadWhiteTexture, TexCoords, color);
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D>& texture, const glm::vec4& tintColor)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D>& texture, const glm::vec2* texCoords, const glm::vec4& tintColor)
 	{
 		QuadVertex Vertices[4];
-		glm::vec2 TexCoords[4] = { {0.0, 0.0},
-									{1.0, 0.0},
-									{1.0, 1.0},
-									{0.0, 1.0} };
 
 		for (int i = 0; i < 4; i++)
 		{
 			Vertices[i].Position = glm::vec2((transform * s_Data.QuadVertexPositions[i]));
 			Vertices[i].Color = tintColor;
-			Vertices[i].TexCoord = TexCoords[i];	// TODO: Move to init
+			Vertices[i].TexCoord = texCoords[i];
 		}
 
 		s_Data.QuadVB->SetData(Vertices, sizeof(Vertices));
@@ -132,8 +132,15 @@ namespace Arkitect {
 
 	void Renderer2D::DrawSprite(const glm::mat4& transform, const SpriteComponent& sprite)
 	{
+		
 		if (sprite.Texture) {
-			DrawQuad(transform, sprite.Texture, sprite.Color);
+			glm::vec2 texCoords[] = {
+				{sprite.MinCoord.x, sprite.MinCoord.y},
+				{sprite.MaxCoord.x, sprite.MinCoord.y},
+				{sprite.MaxCoord.x, sprite.MaxCoord.y},
+				{sprite.MinCoord.x, sprite.MaxCoord.y}
+			};
+			DrawQuad(transform, sprite.Texture, texCoords, sprite.Color);
 		}
 		else {
 			DrawQuad(transform, sprite.Color);
