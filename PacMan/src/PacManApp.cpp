@@ -1,12 +1,12 @@
 #include "Arkitect.h"
 #include "core/EntryPoint.h"
 
-#include "TLayer.h"
+#include "GameLayer.h"
 
 class PacManApp : public Arkitect::Application {
 public:
 	PacManApp() {
-		PushLayer(new TLayer());
+		PushLayer(new GameLayer());
 	}
 
 	~PacManApp() {
