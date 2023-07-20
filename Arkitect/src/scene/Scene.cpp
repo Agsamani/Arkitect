@@ -71,6 +71,9 @@ namespace Arkitect {
 
 		{
 			auto group = m_Registry.group<SpriteComponent>(entt::get<TransformComponent>);
+			group.sort<TransformComponent>([](const TransformComponent& a, const TransformComponent& b) {
+				return a.Translation.z < b.Translation.z;
+			});
 			for (auto entity : group) {
 				auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
 

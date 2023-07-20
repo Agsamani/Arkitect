@@ -13,7 +13,7 @@
 namespace Arkitect {
 
 	struct QuadVertex {
-		glm::vec2 Position;
+		glm::vec3 Position;
 		glm::vec4 Color;
 		glm::vec2 TexCoord;
 	};
@@ -37,6 +37,8 @@ namespace Arkitect {
 
 	void Renderer2D::Init()
 	{
+		RenderCommand::Init();
+
 		s_Data.QuadVertexPositions[0] = glm::vec4(-0.5, -0.5, 0.0, 1.0);
 		s_Data.QuadVertexPositions[1] = glm::vec4(0.5, -0.5, 0.0, 1.0);
 		s_Data.QuadVertexPositions[2] = glm::vec4(0.5,  0.5, 0.0, 1.0);
@@ -52,7 +54,7 @@ namespace Arkitect {
 		s_Data.QuadVA = std::make_shared<VertexArray>();
 
 		BufferLayout layout = {
-			{ShaderDataType::Float2, "position"},
+			{ShaderDataType::Float3, "position"},
 			{ShaderDataType::Float4, "color"},
 			{ShaderDataType::Float2, "texcoord"}
 		};
@@ -113,7 +115,7 @@ namespace Arkitect {
 
 		for (int i = 0; i < 4; i++)
 		{
-			Vertices[i].Position = glm::vec2((transform * s_Data.QuadVertexPositions[i]));
+			Vertices[i].Position = glm::vec3((transform * s_Data.QuadVertexPositions[i]));
 			Vertices[i].Color = tintColor;
 			Vertices[i].TexCoord = texCoords[i];
 		}
@@ -221,19 +223,19 @@ namespace Arkitect {
 			texCoordMin *= glm::vec2(texelWidth, texelHeight);
 			texCoordMax *= glm::vec2(texelWidth, texelHeight);
 
-			Vertices[0].Position = glm::vec2((transform * glm::vec4(quadMin, 0.0f, 1.0f)));
+			Vertices[0].Position = glm::vec3((transform * glm::vec4(quadMin, 0.0f, 1.0f)));
 			Vertices[0].Color = textParams.Color;
 			Vertices[0].TexCoord = texCoordMin;
 
-			Vertices[1].Position = glm::vec2(((transform * glm::vec4(quadMax.x, quadMin.y, 0.0f, 1.0f))));
+			Vertices[1].Position = glm::vec3(((transform * glm::vec4(quadMax.x, quadMin.y, 0.0f, 1.0f))));
 			Vertices[1].Color = textParams.Color;
 			Vertices[1].TexCoord = { texCoordMax.x, texCoordMin.y };
 
-			Vertices[2].Position = glm::vec2(((transform * glm::vec4(quadMax, 0.0f, 1.0f))));
+			Vertices[2].Position = glm::vec3(((transform * glm::vec4(quadMax, 0.0f, 1.0f))));
 			Vertices[2].Color = textParams.Color;
 			Vertices[2].TexCoord = texCoordMax;
 
-			Vertices[3].Position = glm::vec2(((transform * glm::vec4(quadMin.x, quadMax.y, 0.0f, 1.0f))));
+			Vertices[3].Position = glm::vec3(((transform * glm::vec4(quadMin.x, quadMax.y, 0.0f, 1.0f))));
 			Vertices[3].Color = textParams.Color;
 			Vertices[3].TexCoord = { texCoordMin.x, texCoordMax.y };
 
