@@ -19,4 +19,6 @@ private:
 	Arkitect::OrthographicCameraController m_Camera;
 
 	std::shared_ptr<Arkitect::Scene> m_Scene;
+
+	std::shared_ptr<Arkitect::SpriteAnimation> m_Animation;
 };

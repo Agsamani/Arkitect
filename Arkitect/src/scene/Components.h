@@ -36,7 +36,7 @@ namespace Arkitect {
 		std::shared_ptr<Texture2D> Texture;
 		float TilingFactor = 1.0f;
 
-		void SetSpriteSheet(SpriteSheet& spriteSheet);
+		void SetSpriteSheet(SpriteSheet& spriteSheet); // TODO: rename function
 		void SetSpriteSheet(SpriteSheet& spriteSheet, const glm::u32vec2& minPixel, const glm::u32vec2& maxPixel);
 
 		SpriteComponent() = default;
@@ -45,7 +45,6 @@ namespace Arkitect {
 			:Color(color) {}
 	};
 
-	
 	// Physics
 	struct RigidBody2DComponent {
 		enum class BodyType { Static = 0, Dynamic, Kinematic };

@@ -26,12 +26,16 @@
 #include "renderer/Renderer2D.h"
 #include "renderer/Font.h"
 #include "renderer/SpriteSheet.h"
+#include "renderer/Animation/SpriteAnimation.h"
 
 // Scene
 #include "scene/Scene.h"
 #include "scene/Entity.h"
 #include "scene/Components.h"
 #include "scene/ScriptableEntity.h"
+
+// Utilities
+#include "utilities/StateMachine.h"
 
 // Vendor
 #include "glm/glm.hpp"

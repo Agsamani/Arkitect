@@ -15,9 +15,9 @@ namespace Arkitect {
 	}
 
 	void SpriteSheet::SetMinMaxByPixel(const glm::u32vec2& minPixel, const glm::u32vec2& maxPixel)
-	{ // Reverses Y so it is easy to use pixel coordinates of images like in photoshop
-		m_Min = { (float)(minPixel.x) / m_SpriteSheet->GetWidth() , (float)(m_SpriteSheet->GetHeight() - (minPixel.y + 1)) / m_SpriteSheet->GetHeight() };
-		m_Max = { (float)(maxPixel.x + 1) / m_SpriteSheet->GetWidth() , (float)(m_SpriteSheet->GetHeight() - maxPixel.y) / m_SpriteSheet->GetHeight() };
+	{ 
+		m_Min = { (float)(minPixel.x) / GetTexture()->GetWidth() , (float)(minPixel.y) / GetTexture()->GetHeight() };
+		m_Max = { (float)(maxPixel.x + 1) / GetTexture()->GetWidth() , (float)(maxPixel.y + 1) / GetTexture()->GetHeight() };
 	}
 
 }
