@@ -11,7 +11,9 @@
 
 class SandBoxApp : public Arkitect::Application {
 public:
-	SandBoxApp() {
+	SandBoxApp(const Arkitect::ApplicationSpecification& spec) 
+		:Arkitect::Application(spec) 
+	{
 		PushLayer(new Renderer2DTestLayer());
 	}
 
@@ -20,5 +22,6 @@ public:
 };
 
 Arkitect::Application* Arkitect::CreateApplication() {
-	return new SandBoxApp();
+	Arkitect::ApplicationSpecification spec;
+	return new SandBoxApp(spec);
 }

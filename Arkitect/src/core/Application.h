@@ -11,10 +11,19 @@ int main(int argc, char** argv);
 // TODO : std::filesystem::current_path
 
 namespace Arkitect {
+
+	struct ApplicationSpecification
+	{
+		std::string Name = "Arkitect";
+		std::string WorkingDirectory;
+		uint32_t Width = 2048;
+		uint32_t Height = 1280;
+	};
+
 	class Application
 	{
 	public:
-		Application();
+		Application(const ApplicationSpecification& spec);
 		virtual ~Application();
 
 		Window& GetWindow() { return *m_Window; }
@@ -40,6 +49,8 @@ namespace Arkitect {
 		LayerStack layerStack;
 
 		float m_LastFrameTime = 0.0;
+
+		ApplicationSpecification m_Specification;
 
 		static Application* m_Instance;
 		friend int ::main(int argc, char** argv);

@@ -2,7 +2,7 @@
 #include "imgui.h"
 
 GameLayer::GameLayer()
-	:Layer("GameLayer"), m_Camera(1.6), m_Scene(std::make_shared<Arkitect::Scene>())
+	:Layer("GameLayer"), m_Camera(1.0), m_Scene(std::make_shared<Arkitect::Scene>())
 {
 
 }

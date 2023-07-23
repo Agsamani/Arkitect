@@ -6,6 +6,8 @@
 
 #include "Renderer/RenderCommand.h"
 
+#include <filesystem>
+
 //Temp 
 #include <imgui.h>
 
@@ -13,14 +15,19 @@ namespace Arkitect {
 
 	Application* Application::m_Instance = nullptr;
 
-	Application::Application()
+	Application::Application(const ApplicationSpecification& specification)
+		:m_Specification(specification)
 	{
 		if (m_Instance) {
 			RKT_CORE_ERROR("Application already exists");
 		}
 		m_Instance = this;
 
-		m_Window = std::make_unique<Window>();
+		// Set working directory here
+		if (!m_Specification.WorkingDirectory.empty())
+			std::filesystem::current_path(m_Specification.WorkingDirectory);
+
+		m_Window = std::make_unique<Window>(m_Specification.Width, m_Specification.Height, m_Specification.Name);
 		m_Window->SetEventCallback(RKT_BIND_EVENT_FN(OnEvent));
 
 		RenderCommand::Init();

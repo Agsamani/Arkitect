@@ -5,7 +5,9 @@
 
 class PacManApp : public Arkitect::Application {
 public:
-	PacManApp() {
+	PacManApp(const Arkitect::ApplicationSpecification& spec)
+		:Arkitect::Application(spec) 
+	{
 		PushLayer(new GameLayer());
 	}
 
@@ -14,5 +16,9 @@ public:
 };
 
 Arkitect::Application* Arkitect::CreateApplication() {
-	return new PacManApp();
+	Arkitect::ApplicationSpecification spec;
+	spec.Name = "PACMAN!";
+	spec.Width = 1280;
+	spec.Height = 1280;
+	return new PacManApp(spec);
 }
