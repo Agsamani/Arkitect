@@ -1,7 +1,8 @@
 # Arkitect
-A lightweight, game development framework supporting 2D and 3D development. Arkitect provides full 2D rendering, 2D physics, and a basic 3D rendering pipeline.
+A lightweight, game development framework supporting 2D and 3D development. Arkitect provides full 2D rendering, 2D physics, and a basic 3D rendering pipeline. 
 
 ## Clone
+Currently Windows support only.
 ```
 git clone https://github.com/Agsamani/Arkitect.git
 cd Arkitect
@@ -10,9 +11,9 @@ git submodule update --init --recursive
 ```
 
 ## Screenshots
-![MandleBulb](.\Readme\MandleBulb.png)
-![MandleBulb](.\Readme\Compute.png)
-![MandleBulb](.\Readme\Donut.png)
-![MandleBulb](.\Readme\Physics.png)
+![MandleBulb](Readme/MandleBulb.png)
+![MandleBulb](Readme/Compute.png)
+![MandleBulb](Readme/Donut.png)
+![MandleBulb](Readme/Physics.png)
 
 
