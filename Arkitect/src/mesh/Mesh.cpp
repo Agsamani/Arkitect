@@ -30,6 +30,7 @@ namespace Arkitect {
 		auto positionBufferView = data["bufferViews"][(int)data["accessors"][positionIndex]["bufferView"]];
 		auto indicesBufferView = data["bufferViews"][(int)data["accessors"][indicesIndex]["bufferView"]];
 
+		auto x = data["accessors"][indicesIndex]["componentType"];
 		std::shared_ptr<VertexBuffer> vertexBuffer = std::make_shared<VertexBuffer>(buffer + (int)positionBufferView["byteOffset"], positionBufferView["byteLength"]);
 		std::shared_ptr<IndexBuffer> indexBuffer =  std::make_shared<IndexBuffer>(buffer + (int)indicesBufferView["byteOffset"], (int)data["accessors"][indicesIndex]["count"], data["accessors"][indicesIndex]["componentType"]);
 

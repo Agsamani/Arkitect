@@ -26,6 +26,8 @@ void GameLayer::OnAttach()
 
 	m_Scene->OnSceneStart();
 
+	// TODO : Change y reverse of sprite sheet
+
 	Arkitect::SpriteAnimationSpec spec;
 	spec.FrameWidth = 15;
 	spec.FrameHeight = 15;
